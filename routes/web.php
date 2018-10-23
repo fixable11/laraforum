@@ -24,3 +24,4 @@ Route::get('/test',function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('add_reply_to_t');
