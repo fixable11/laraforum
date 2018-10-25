@@ -43,6 +43,13 @@ class Thread extends Model
         return $this->belongsTo(Channel::class);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param [type] $filters
+     * @return void
+     */
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);

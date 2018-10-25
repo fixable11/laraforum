@@ -53,6 +53,9 @@
                                             <a class="nav-link" href="/threads?by={{ auth()->user()->name }}">
                                                 Mythreads
                                             </a>
+                                            <a class="nav-link" href="/threads?popular=1">
+                                                Popular threads
+                                            </a>
                                             @endif
 
                                         </div>
