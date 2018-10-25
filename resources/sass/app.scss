@@ -22,3 +22,16 @@ body{
     align-items: center; 
     justify-content: space-between;
 }
+
+.cardOwn{
+    display: flex;
+    align-items: center;
+    &__left{
+        flex-grow: 1;
+        display: block;
+    }
+    &__right{
+        flex-grow: 1;
+        float: right;
+    }
+}
