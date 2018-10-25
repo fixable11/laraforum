@@ -10511,3 +10511,7 @@ body {
   float: right;
 }
 
+.card__default {
+  margin-top: 20px;
+}
+

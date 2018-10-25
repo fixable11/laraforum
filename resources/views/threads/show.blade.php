@@ -9,7 +9,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="#">{{ $thread->creator->name }}</a>
+                            <a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>
                             {{ $thread->title }}
                         </div>
 

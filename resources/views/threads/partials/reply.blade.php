@@ -1,7 +1,7 @@
 <div class="card-header" style="margin-top: 50px">
     <div class="cardOwn">
         <div class="cardOwn__left">
-            <a class="cardOwn__link" href="#">{{ $reply->owner->name }}</a>
+            <a class="cardOwn__link" href="{{ route('profile', $reply->owner->name) }}">{{ $reply->owner->name }}</a>
             said {{ $reply->created_at->diffForHumans() }}
         </div>
         <div class="cacardOwn__right">

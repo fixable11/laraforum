@@ -35,3 +35,9 @@ body{
         float: right;
     }
 }
+
+.card{
+    &__default{
+        margin-top: 20px;
+    }
+}
