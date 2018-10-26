@@ -14,8 +14,12 @@
             @foreach ($threads as $thread)
             <div class="card card__default">
                 <div class="card-header">
-                    <a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>
-                    {{ $thread->title }}
+                    <a href="{{ route('profile', $thread->creator->name) }}">
+                        {{ $thread->creator->name }}
+                    </a> posted
+                    <a href="{{ $thread->path() }}">
+                        {{ $thread->title }}
+                    </a>
                 </div>
 
                 <div class="card-body">

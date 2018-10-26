@@ -8,11 +8,23 @@
 
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>
-                            {{ $thread->title }}
+                        <div class="card-header card-header__flex">
+                            <div class="card-header__left">
+                                <a href="{{ route('profile', $thread->creator->name) }}">
+                                    {{ $thread->creator->name }}
+                                </a>
+                                {{ $thread->title }}
+                            </div>
+                            <div class="car-header__right">
+                                @can ('update', $thread)
+                                <form action="{{ $thread->path() }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">Delete Thread</button>
+                                </form>
+                                @endcan
+                            </div>
                         </div>
-
                         <div class="card-body">
                             {{ $thread->body }}
 
