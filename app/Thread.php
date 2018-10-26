@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\RecordsActivity;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
     protected $with = ['creator', 'channel'];
@@ -18,9 +21,10 @@ class Thread extends Model
             $builder->withCount('replies');
         });
 
-        static::deleting(function($thread){
+        static::deleting(function ($thread) {
             $thread->replies()->delete();
         });
+
     }
 
     public function path()

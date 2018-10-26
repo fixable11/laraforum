@@ -11,24 +11,15 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            @foreach ($threads as $thread)
-            <div class="card card__default">
-                <div class="card-header">
-                    <a href="{{ route('profile', $thread->creator->name) }}">
-                        {{ $thread->creator->name }}
-                    </a> posted
-                    <a href="{{ $thread->path() }}">
-                        {{ $thread->title }}
-                    </a>
-                </div>
-
-                <div class="card-body">
-                    {{ $thread->body }}
-                </div>
-            </div>
+            @foreach ($activities as $date => $activity)
+                <h3 class="page-header">{{ $date }}</h3>
+                <hr>
+                @foreach ($activity as $record)
+                    @include("profiles.activities.{$record->type}", ['activity' => $record])
+                @endforeach
             @endforeach
 
-            {{ $threads->links() }}
+            {{-- {{ $activity->links() }} --}}
         </div>
     </div>
 </div>
