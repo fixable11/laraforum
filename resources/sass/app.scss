@@ -8,6 +8,13 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import 'sections/replies';
+
+
+.d-n{
+    display: none;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -52,4 +59,19 @@ body{
 
 .page-header{
     margin-top: 20px;
+}
+
+.alert-own{
+    position: fixed;
+    left: 15px;
+    bottom: 25px;
+}
+
+.card-footer{
+    &_own{
+        display: flex;
+    }
+    .btn{
+        margin-right: 10px;
+    }
 }

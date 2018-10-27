@@ -13689,13 +13689,16 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Common__ = __webpack_require__(36);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13704,6 +13707,7 @@ module.exports = __webpack_require__(36);
  */
 
 __webpack_require__(12);
+
 
 // window.Vue = require('vue');
 
@@ -13718,6 +13722,99 @@ __webpack_require__(12);
 // const app = new Vue({
 //     el: '#app'
 // });
+
+
+$(document).ready(function () {
+
+    var common = new __WEBPACK_IMPORTED_MODULE_0__Common__["a" /* default */]();
+
+    $('.app-alert-success,.app-alert-error').css('display', 'none').removeClass('d-n');
+
+    common.flashFadeOut($('.alert-flash'));
+
+    //REPLY
+    $('.reply__btnEdit').on('click', function (e) {
+        e.preventDefault();
+
+        var closest = $(this).closest('.reply');
+        var body = closest.find('.reply__body');
+        var bodyText = body.text();
+
+        body.hide();
+
+        var editArea = closest.find('.reply__editArea');
+        var form = closest.find('.reply__form');
+        editArea.val(bodyText);
+
+        form.removeClass('d-n');
+    });
+
+    $('.reply__btnCancel').on('click', function (e) {
+        e.preventDefault();
+
+        var closest = $(this).closest('.reply');
+        var body = closest.find('.reply__body');
+
+        body.show();
+
+        var editArea = closest.find('.reply__editArea');
+        var form = closest.find('.reply__form');
+        editArea.val('');
+
+        form.addClass('d-n');
+    });
+
+    $('.reply__btnUpdate').on('click', function (e) {
+        e.preventDefault();
+
+        var closest = $(this).closest('.reply');
+        var form = closest.find('.reply__form');
+        var body = closest.find('.reply__body');
+
+        common.ajax(form, form.attr('action'), function (result) {
+
+            if (result.success) {
+                form.addClass('d-n');
+                body.text(result.content);
+                body.show();
+                var statusBar = $('.app-alert-success').html(result.status);
+                common.flashShow(statusBar);
+                common.flashFadeOut(statusBar);
+            }
+        }, function () {
+            form.addClass('d-n');
+            body.show();
+            var statusBar = $('.app-alert-error').html('Reply hasn\'t been updated');
+            common.flashShow(statusBar);
+            common.flashFadeOut(statusBar);
+        });
+    });
+
+    $('.reply__btnDelete').on('click', function (e) {
+        e.preventDefault();
+
+        var closest = $(this).closest('.reply');
+        var form = closest.find('.reply__form_delete');
+
+        common.ajax(form, form.attr('action'), function (result) {
+            if (result.success) {
+                form.closest('.replyWrap').fadeOut();
+                var statusBar = $('.app-alert-success').html(result.status);
+                common.flashShow(statusBar);
+                common.flashFadeOut(statusBar);
+            }
+        }, function () {
+            form.addClass('d-n');
+            body.show();
+            var statusBar = $('.app-alert-error').html('Reply hasn\'t been deleted');
+            common.flashShow(statusBar);
+            common.flashFadeOut(statusBar);
+        });
+    });
+
+    //REPLY END
+
+});
 
 /***/ }),
 /* 12 */
@@ -35953,6 +36050,54 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 36 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Common = function () {
+    function Common() {
+        _classCallCheck(this, Common);
+    }
+
+    _createClass(Common, [{
+        key: 'flashFadeOut',
+        value: function flashFadeOut(element) {
+            var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+
+            element.delay(delay).fadeOut();
+        }
+    }, {
+        key: 'flashShow',
+        value: function flashShow(element) {
+            element.fadeIn();
+        }
+    }, {
+        key: 'ajax',
+        value: function ajax(form, url, success, error) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                dataType: 'json',
+                data: form.serialize(),
+                success: success,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                error: error
+            });
+        }
+    }]);
+
+    return Common;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Common);
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

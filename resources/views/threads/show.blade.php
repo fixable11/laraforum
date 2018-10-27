@@ -58,7 +58,7 @@
                         <button type="submit" class="btn btn-info">Post</button>
                     </form>
                     @else
-                    <p clas </div> </div> s="text-center">Please <a href="{{ route('login')}}">sign in</a> to
+                    <p class="text-center">Please <a href="{{ route('login')}}">sign in</a> to
                         participate
                         in this dicussion</p>
                     @endif
