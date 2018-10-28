@@ -24,6 +24,8 @@ body{
     padding-bottom: 100px;
 }
 
+[v-cloak] {display: none;}
+
 .level{
     display: flex;
     align-items: center; 
@@ -39,9 +41,23 @@ body{
     }
     &__right{
         flex-grow: 1;
-        float: right;
+        display: flex;
+        justify-content: flex-end;
     }
 }
+
+.favoriteBtn{
+    &__amount{
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    &__icon{
+        font-size: 14px; 
+    }
+
+}
+
 
 .card{
     &__default{

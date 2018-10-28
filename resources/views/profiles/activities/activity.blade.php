@@ -6,4 +6,4 @@
         <div class="card-body">
             {{ $body }}
         </div>
-    </div>
+</div>

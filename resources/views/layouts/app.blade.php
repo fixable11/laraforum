@@ -25,11 +25,14 @@
 
 <body style="padding-bottom: 100px;">
     <div id="app">
+            
         @include('layouts.nav')
 
         <main class="py-4">
             @yield('content')
         </main>
+
+        <flash message="{{ session('flash') }}"></flash>   
         
         <div class="app-alert-success alert-own alert alert-success d-n">
             <strong>Success </strong>{{session('flash')}}
@@ -38,12 +41,6 @@
         <div class="app-alert-error alert-own alert alert-danger d-n">
             <strong>Error </strong>{{session('error')}}
         </div>
-
-        @if (session()->has('flash'))
-            <div class="alert-flash alert-own alert alert-success">
-                <strong>Success </strong>{{session('flash')}}
-            </div>
-        @endif
         
     </div>
 </body>

@@ -1,47 +1,53 @@
-<div class="replyWrap">
-    <div id="reply-{{ $reply->id }}" class="card-header" style="margin-top: 50px">
-        <div class="cardOwn">
-            <div class="cardOwn__left">
-                <a class="cardOwn__link" href="{{ route('profile', $reply->owner->name) }}">{{ $reply->owner->name }}</a>
-                said {{ $reply->created_at->diffForHumans() }}
-            </div>
-            <div class="cacardOwn__right">
-                <form method="POST" action="/replies/{{ $reply->id }}/favorites">
-                    @csrf
-                    <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                        {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
-                    </button>
-                </form>
+<reply :attributes="{{ $reply }}" inline-template v-cloak>
+    <div class="replyWrap">
+        <div id="reply-{{ $reply->id }}" class="card-header" style="margin-top: 50px">
+            <div class="cardOwn">
+                <div class="cardOwn__left">
+                    <a class="cardOwn__link" href="{{ route('profile', $reply->owner->name) }}">{{ $reply->owner->name }}</a>
+                    said {{ $reply->created_at->diffForHumans() }}
+                </div>
+                <div class="cardOwn__right">
+                    <favorite :reply="{{ $reply }}" ></favorite>
+                    {{-- <form method="POST" action="/replies/{{ $reply->id }}/favorites">
+                        @csrf
+                        <button type="submit" class="favoriteBtn btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
+                            <i class="favoriteBtn__icon fas fa-heart"></i><span class="favoriteBtn__amount">{{ $reply->favorites_count }}</span> 
+                        </button>
+                    </form> --}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card reply">
+        <div class="card reply">
 
-        <div class="card-body">
-            <div class="reply__body">{{ $reply->body }}</div>
-            <form class="reply__form d-n" method="POST" action="/replies/{{ $reply->id }}">
-                @csrf
-                @method('PUT')
-                <textarea class="form-control reply__editArea" name="body" id="reply-body" rows="4"></textarea>
-                <div class="reply__buttonsArea">
-                    <button type="submit" class="reply__btnUpdate btn-update btn btn-info btn-sm">Update</button>
-                    <button class="reply__btnCancel btn-cancel btn btn-secondary btn-sm">Cancel</button>
-                </div> 
-            </form>
-        </div>
+            <div class="card-body">
 
-        {{-- @can('update', $reply) --}}
-            <div class="card-footer card-footer_own">
-                <button class="reply__btnEdit btn-edit btn btn-sm btn-primary">Edit</button>
+                <div v-if="editState">
+                    <textarea class="form-control" name="" v-model="body"></textarea>
+                    <div class="reply__buttonsArea">
 
-                <form class="reply__form_delete" method="POST" action="/replies/{{ $reply->id }}">
-                    @csrf
-                    @method('DELETE')
+                        <button type="submit" class="btn-update btn btn-info btn-sm"
+                        @click="update">Update</button>
 
-                    <button type="submit" class="reply__btnDelete btn-delete btn btn-danger btn-sm">Delete</button>
-                </form>
+                        <button class="btn-cancel btn btn-secondary btn-sm"
+                        @click="editing">Cancel</button>
+
+                    </div> 
+                </div>
+                <div v-else v-text="body"></div>
             </div>
-        {{-- @endcan --}}
-        
+
+            @can('update', $reply)
+                <div class="card-footer card-footer_own">
+
+                    <button class="btn-edit btn btn-sm btn-primary" 
+                    @click="editing">Edit</button>
+
+                    <button type="submit" class="btn-delete btn btn-danger btn-sm"
+                    @click="destroy">Delete</button>
+
+                </div>
+            @endcan
+            
+        </div>
     </div>
-</div>
+</reply>
