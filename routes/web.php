@@ -32,6 +32,7 @@ Route::get('/threads/{channel}', 'ThreadsController@index');
 
 Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('add_reply_to_t');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
+Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 Route::delete('/replies/{reply}', 'RepliesController@destroy');
 Route::put('/replies/{reply}', 'RepliesController@update');
 

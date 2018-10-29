@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col-md-12">
-                        <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                        <replies @added="repliesCount++" @removed="repliesCount--"></replies>
                     </div>
                     {{-- <div class="col-md-12" style="margin-top: 50px">
                         @foreach ($replies as $reply)
@@ -50,23 +50,6 @@
                     <div class="col-md-12">
                         {{$replies->links()}}
                     </div> --}}
-
-                    <div class="col-md-12" style="margin-top: 50px">
-                        @if (auth()->check())
-                        <form method="POST" action="{{ $thread->path() . '/replies'}}">
-                            @csrf
-                            <div class="form-group">
-                                <textarea rows="5" placeholder="Body" name="body" class="form-control" id="body" cols="30"
-                                    rows="10"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-info">Post</button>
-                        </form>
-                        @else
-                        <p class="text-center">Please <a href="{{ route('login')}}">sign in</a> to
-                            participate
-                            in this dicussion</p>
-                        @endif
-                    </div>
 
                 </div>
             </div>
