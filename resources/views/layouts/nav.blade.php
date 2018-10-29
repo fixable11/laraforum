@@ -29,6 +29,9 @@
                                     <a class="nav-link" href="/threads?popular=1">
                                         Popular threads
                                     </a>
+                                    <a class="nav-link" href="/threads?unanswered=1">
+                                        Unanswered threads
+                                    </a>
                                     @endif
 
                                 </div>

@@ -64433,6 +64433,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.dataSet = data;
             this.dataSet.endpoint = this.endpoint;
             this.items = data.data;
+
+            window.scrollTo(0, 0);
         }
     }
 });
