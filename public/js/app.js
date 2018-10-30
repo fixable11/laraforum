@@ -30374,7 +30374,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(138);
-module.exports = __webpack_require__(196);
+module.exports = __webpack_require__(199);
 
 
 /***/ }),
@@ -30405,6 +30405,7 @@ __webpack_require__(164);
 Vue.component('flash', __webpack_require__(166));
 Vue.component('thread-view', __webpack_require__(174));
 Vue.component('paginator', __webpack_require__(193));
+Vue.component('user-notifications', __webpack_require__(196));
 //Vue.component('pagination', require('laravel-vue-pagination'));
 
 var app = new Vue({
@@ -65852,6 +65853,162 @@ if (false) {
 
 /***/ }),
 /* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(197)
+/* template */
+var __vue_template__ = __webpack_require__(198)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/UserNotifications.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23249cfc", Component.options)
+  } else {
+    hotAPI.reload("data-v-23249cfc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 197 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            notifications: false
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/profiles/' + window.App.user.name + "/notifications").then(function (response) {
+            return _this.notifications = response.data;
+        });
+    },
+
+
+    methods: {
+        markAsRead: function markAsRead(notification) {
+            axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
+        }
+    }
+});
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.notifications.length
+    ? _c("li", { staticClass: "nav-item dropdown" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "dropdown-menu",
+            attrs: { "aria-labelledby": "dropdownMenuButton" }
+          },
+          _vm._l(_vm.notifications, function(notification, index) {
+            return _c(
+              "a",
+              {
+                key: index,
+                staticClass: "dropdown-item",
+                attrs: { href: notification.data.link },
+                on: {
+                  click: function($event) {
+                    _vm.markAsRead(notification)
+                  }
+                }
+              },
+              [
+                _c("span", {
+                  domProps: { textContent: _vm._s(notification.data.message) }
+                })
+              ]
+            )
+          })
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link dropdown-toggle",
+        attrs: { href: "#", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "fas fa-bell" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23249cfc", module.exports)
+  }
+}
+
+/***/ }),
+/* 199 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
