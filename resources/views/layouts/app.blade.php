@@ -34,14 +34,6 @@
 
         <flash message="{{ session('flash') }}"></flash>   
         
-        <div class="app-alert-success alert-own alert alert-success d-n">
-            <strong>Success </strong>{{session('flash')}}
-        </div>
-
-        <div class="app-alert-error alert-own alert alert-danger d-n">
-            <strong>Error </strong>{{session('error')}}
-        </div>
-        
     </div>
 
     <script>

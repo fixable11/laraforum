@@ -91,6 +91,8 @@
                     if(response.data.success){
                         flash(response.data.status);
                     }
+                }).catch(error => {
+                    flash(error.response.data, 'danger');
                 });
 
                 this.data.body = this.body;

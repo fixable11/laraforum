@@ -24,12 +24,17 @@ class RepliesController extends Controller
      */
     public function store($channelId, Thread $thread)
     {
-        $this->validateReply();
+        try {
+            $this->validateReply();
 
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch(\Exception $e) {
+            return response('Sorry, your reply cannot be saved', 422);
+        }
+        
 
         if(request()->expectsJson()){
             return $reply->load('owner');
@@ -58,11 +63,15 @@ class RepliesController extends Controller
     {
         $this->authorize('update', $reply);
 
-        $this->validateReply();
+        try {
+            $this->validateReply();
 
-        $body = request('body');
+            $body = request('body');
 
-        $success = $reply->update(['body' => $body]);
+            $success = $reply->update(['body' => $body]);
+        } catch(\Exception $e) {
+            return response('Sorry, your reply cannot be saved', 422);
+        }
 
         if ($success) {
             return response()->json([
@@ -80,8 +89,7 @@ class RepliesController extends Controller
 
     public function validateReply()
     {
-        $this->validate(request(), ['body' => 'required']);
-
-        resolve(Spam::class)->detect(request('body'));
+        $this->validate(request(), ['body' => 'required|spamfree']);
+ 
     }
 }
