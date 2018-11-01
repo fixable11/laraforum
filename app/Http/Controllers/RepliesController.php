@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Inspections\Spam;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CreatePostRequest;
+use App\User;
+use App\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {

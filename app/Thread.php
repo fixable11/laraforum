@@ -8,6 +8,7 @@ use App\Notifications\ThreadWasUpdated;
 use App\Events\ThreadHasNewReply;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use App\Events\ThreadReceivedNewReply;
 
 class Thread extends Model
 {
@@ -52,7 +53,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->notifySubscribers($reply);
+        event(new ThreadReceivedNewReply($reply));
 
         return $reply;
     }
@@ -60,11 +61,7 @@ class Thread extends Model
     public function notifySubscribers($reply)
     {
 
-        $this->subscriptions
-            ->where('user_id', '!=', $reply->user_id)
-            ->each(function ($sub) use ($reply){
-                $sub->notify($reply);
-            }); 
+        
     }
 
     public function channel()
