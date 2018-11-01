@@ -7,6 +7,7 @@ use App\Reply;
 use Illuminate\Http\Request;
 use App\Inspections\Spam;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
 {
@@ -23,29 +24,12 @@ class RepliesController extends Controller
      * @param \App\Thread $thread
      * @return void
      */
-    public function store($channelId, Thread $thread)
-    {
-        try {
-            if(Gate::denies('create', new Reply)){
-                return response('You are posting too frequently. Please take a break', 422);
-            }
-
-            $this->validate(request(), ['body' => 'required|spamfree']);   
-
-        } catch(\Exception $e) {
-            return response('Sorry, your reply cannot be saved', 422);
-        }
-
-        $reply = $thread->addReply([
+    public function store($channelId, Thread $thread, CreatePostRequest $request)
+    { 
+        return $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
-        ]); 
-
-        //if(request()->expectsJson()){
-            return $reply->load('owner');
-        //}
-        
-        return back()->with('flash', 'Your reply has been left');
+        ])->load('owner'); 
     }
 
     public function destroy(Reply $reply)

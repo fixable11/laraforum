@@ -2,6 +2,7 @@
 
 namespace App\Inspections;
 use Exception;
+use Illuminate\Validation\ValidationException;
 
 class KeyHeldDown
 {
@@ -9,7 +10,7 @@ class KeyHeldDown
     public function detect($body)
     {
         if(preg_match('/(.)\1{4,}/u', $body)){
-            throw new Exception('Your reply contains spam');
+            throw new ValidationException('Your reply contains spam');
         }
     }
 }

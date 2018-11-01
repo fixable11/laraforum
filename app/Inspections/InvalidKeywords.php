@@ -2,6 +2,7 @@
 
 namespace App\Inspections;
 use Exception;
+use Illuminate\Validation\ValidationException;
 
 class Invalidkeywords
 {
@@ -14,7 +15,7 @@ class Invalidkeywords
 
         foreach ($this->keywords as $keyword) {
             if(stripos(request($body), $keyword) !== false ){
-                throw new Exception('Your reply contains spam');
+                throw new ValidationException('Your reply contains spam');
             }
         }
     }

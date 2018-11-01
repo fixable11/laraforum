@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Inspections;
-use Exception;
 
 class Spam
 {
