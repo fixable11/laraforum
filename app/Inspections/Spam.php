@@ -15,8 +15,6 @@ class Spam
         foreach($this->inspections as $inspection){
             app($inspection)->detect($body);
         }
-
-        return false;
     }
 
 }

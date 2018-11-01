@@ -6,6 +6,7 @@ use App\Thread;
 use App\Reply;
 use Illuminate\Http\Request;
 use App\Inspections\Spam;
+use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -25,21 +26,25 @@ class RepliesController extends Controller
     public function store($channelId, Thread $thread)
     {
         try {
-            $this->validateReply();
+            if(Gate::denies('create', new Reply)){
+                return response('You are posting too frequently. Please take a break', 422);
+            }
 
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => auth()->id()
-            ]);
+            $this->validate(request(), ['body' => 'required|spamfree']);   
+
         } catch(\Exception $e) {
             return response('Sorry, your reply cannot be saved', 422);
         }
-        
 
-        if(request()->expectsJson()){
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id()
+        ]); 
+
+        //if(request()->expectsJson()){
             return $reply->load('owner');
-        }
-
+        //}
+        
         return back()->with('flash', 'Your reply has been left');
     }
 
@@ -64,7 +69,7 @@ class RepliesController extends Controller
         $this->authorize('update', $reply);
 
         try {
-            $this->validateReply();
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
             $body = request('body');
 
@@ -85,11 +90,5 @@ class RepliesController extends Controller
     public function index($channelId, Thread $thread)
     {
         return $thread->replies()->paginate(5);
-    }
-
-    public function validateReply()
-    {
-        $this->validate(request(), ['body' => 'required|spamfree']);
- 
     }
 }

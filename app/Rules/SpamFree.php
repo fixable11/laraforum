@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Inspections\Spam;
+use Exception;
 
 class SpamFree implements Rule
 {
@@ -29,9 +30,9 @@ class SpamFree implements Rule
         try {
             resolve(Spam::class)->detect($value);
         } catch(\Exception $e) {
-            return false;
+            throw $e;
         }
-        
+        return true;
     }
 
     /**
