@@ -64550,6 +64550,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -65068,48 +65069,61 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _vm.editState
           ? _c("div", [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.body,
-                    expression: "body"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "" },
-                domProps: { value: _vm.body },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.update($event)
                     }
-                    _vm.body = $event.target.value
                   }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "reply__buttonsArea" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-update btn btn-info btn-sm",
-                    attrs: { type: "submit" },
-                    on: { click: _vm.update }
-                  },
-                  [_vm._v("Update")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-cancel btn btn-secondary btn-sm",
-                    on: { click: _vm.editing }
-                  },
-                  [_vm._v("Cancel")]
-                )
-              ])
+                },
+                [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.body,
+                        expression: "body"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "", required: "" },
+                    domProps: { value: _vm.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.body = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "reply__buttonsArea" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-update btn btn-info btn-sm",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Update")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-cancel btn btn-secondary btn-sm",
+                        attrs: { type: "button" },
+                        on: { click: _vm.editing }
+                      },
+                      [_vm._v("Cancel")]
+                    )
+                  ])
+                ]
+              )
             ])
           : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
       ]),

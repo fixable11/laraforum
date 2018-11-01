@@ -54,15 +54,11 @@ class RepliesController extends Controller
     {
         $this->authorize('update', $reply);
 
-        try {
-            $this->validate(request(), ['body' => 'required|spamfree']);
+        $this->validate(request(), ['body' => 'required|spamfree']);
 
-            $body = request('body');
+        $body = request('body');
 
-            $success = $reply->update(['body' => $body]);
-        } catch(\Exception $e) {
-            return response('Sorry, your reply cannot be saved', 422);
-        }
+        $success = $reply->update(['body' => $body]);
 
         if ($success) {
             return response()->json([

@@ -18,16 +18,17 @@
             <div class="card-body">
 
                 <div v-if="editState">
-                    <textarea class="form-control" name="" v-model="body"></textarea>
-                    <div class="reply__buttonsArea">
+                    <form @submit.prevent="update">
+                        <textarea class="form-control" name="" v-model="body" required></textarea>
+                        <div class="reply__buttonsArea">
 
-                        <button type="submit" class="btn-update btn btn-info btn-sm"
-                        @click="update">Update</button>
+                            <button type="submit" class="btn-update btn btn-info btn-sm">Update</button>
 
-                        <button class="btn-cancel btn btn-secondary btn-sm"
-                        @click="editing">Cancel</button>
+                            <button class="btn-cancel btn btn-secondary btn-sm" type="button"
+                            @click="editing">Cancel</button>
 
-                    </div> 
+                        </div> 
+                    </form>
                 </div>
                 <div v-else v-text="body"></div>
             </div>
