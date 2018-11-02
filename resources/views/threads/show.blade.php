@@ -11,12 +11,13 @@
                         <div class="card">
                             <div class="card-header card-header__flex">
                                 <div class="card-header__left">
-                                    <a href="{{ route('profile', $thread->creator->name) }}">
+                                    <img class="card-header__leftImg" src="{{ $thread->creator->avatar_path }}" alt="">
+                                    <a class="card-header__leftName" href="{{ route('profile', $thread->creator->name) }}">
                                         {{ $thread->creator->name }}
                                     </a>
-                                    {{ $thread->title }}
+                                    <span class="card-header__leftTitle">posted: {{ $thread->title }}</span>
                                 </div>
-                                <div class="car-header__right">
+                                <div class="card-header__right">
                                     @can ('update', $thread)
                                     <form action="{{ $thread->path() }}" method="POST">
                                         @method('DELETE')
@@ -41,15 +42,6 @@
                     <div class="col-md-12">
                         <replies @added="repliesCount++" @removed="repliesCount--"></replies>
                     </div>
-                    {{-- <div class="col-md-12" style="margin-top: 50px">
-                        @foreach ($replies as $reply)
-                            @include('threads.partials.reply')
-                        @endforeach
-                    </div>
-
-                    <div class="col-md-12">
-                        {{$replies->links()}}
-                    </div> --}}
 
                 </div>
             </div>

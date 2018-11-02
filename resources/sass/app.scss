@@ -73,6 +73,20 @@ body{
         align-items: center;
         justify-content: space-between;
     }
+    &__left{
+        display: flex;
+        align-items: center;
+    }
+    &__leftImg{
+        width: 30px;
+        height: 30px;
+    }
+    &__leftName{
+        margin-left: 10px;
+    }
+    &__leftTitle{
+        margin-left: 5px;
+    }
 }
 
 .page-header{

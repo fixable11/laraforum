@@ -10553,6 +10553,28 @@ body {
           justify-content: space-between;
 }
 
+.card-header__left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-header__leftImg {
+  width: 30px;
+  height: 30px;
+}
+
+.card-header__leftName {
+  margin-left: 10px;
+}
+
+.card-header__leftTitle {
+  margin-left: 5px;
+}
+
 .page-header {
   margin-top: 20px;
 }
