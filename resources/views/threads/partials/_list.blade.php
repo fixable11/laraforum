@@ -21,7 +21,6 @@
                                 {{ $thread->creator->name }}
                             </a>
                         </h5>
-                        <div class="level__hr"></div>
                     </div>
                     <div class="thread__right">
                         <a href="{{ $thread->path() }}">
@@ -29,8 +28,12 @@
                         </a>
                     </div>
                 </div>
+                <div class="level__hr"></div>
                 <div class="body">{{ $thread->body }}</div>
             </article>
+        </div>
+        <div class="card-footer">
+            {{ $thread->visits }} Visits
         </div>
     </div>
 @empty

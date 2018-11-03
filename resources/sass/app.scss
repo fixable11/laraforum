@@ -113,10 +113,12 @@ body{
 }
 
 .level{
-    &__hr{
+    &__hr{    
         margin-top: 10px;
         margin-bottom: 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 1px;
     }
 }
 

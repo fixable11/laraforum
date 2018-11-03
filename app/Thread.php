@@ -58,12 +58,6 @@ class Thread extends Model
         return $reply;
     }
 
-    public function notifySubscribers($reply)
-    {
-
-        
-    }
-
     public function channel()
     {
         return $this->belongsTo(Channel::class);
@@ -113,6 +107,21 @@ class Thread extends Model
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
+    }
+
+    public function trending()
+    {
+        return $this->hasOne('App\TrendingThreads', 'thread_id');
+    }
+
+    public function visits()
+    {
+        return $this->visits_count ?? '0';
+    }
+
+    public static function getPopular()
+    {
+        return self::orderBy('visits', 'desc')->take(5)->get();
     }
 
 }
