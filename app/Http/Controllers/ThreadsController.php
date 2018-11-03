@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redis;
+use App\TrendingThreads;
 
 class ThreadsController extends Controller
 {
@@ -22,15 +24,18 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, TrendingThreads $trending)
     {
         $threads = $this->getThreads($channel, $filters);
 
         if(request()->wantsJson()){
             return $threads;
         }
-  
-        return view('threads.index', compact('threads'));
+     
+        return view('threads.index', [
+            'threads' => $threads,
+            'trending' => $trending->get(),
+        ]);
     }
 
     /**
@@ -75,15 +80,16 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel, Thread $thread)
+    public function show(Channel $channel, Thread $thread, TrendingThreads $trending)
     {   
         if(auth()->check()){
             auth()->user()->read($thread);
         }
+
+        $trending->increaseTrendingScore($thread);
         
         return view('threads.show', [
             'thread' => $thread,
-            //'replies' => $thread->replies()->paginate(20),
         ]);
     }
 
@@ -129,7 +135,6 @@ class ThreadsController extends Controller
 
     }
 
-
     private function getThreads(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
@@ -140,4 +145,5 @@ class ThreadsController extends Controller
 
         return $threads->paginate(5);
     }
+
 }
