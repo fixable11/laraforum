@@ -8,7 +8,7 @@
         props: ['message'],
         data(){
             return {
-                body: '',
+                body: this.message,
                 level: 'success',
                 show: false,
             }
@@ -22,16 +22,18 @@
 
         mounted(){
             if(this.message){
-                this.flash(this.message);
+                this.flash();
             }
         },
 
         methods: {
 
-            flash(data){
-                this.body = data.message;
-                this.level = data.level;
-
+            flash(data = false){
+                if(data){
+                    this.body = data.message;
+                    this.level = data.level;
+                }
+                
                 this.flashShow();
                 this.flashHide();
             },

@@ -64185,7 +64185,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['message'],
     data: function data() {
         return {
-            body: '',
+            body: this.message,
             level: 'success',
             show: false
         };
@@ -64199,15 +64199,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         if (this.message) {
-            this.flash(this.message);
+            this.flash();
         }
     },
 
 
     methods: {
-        flash: function flash(data) {
-            this.body = data.message;
-            this.level = data.level;
+        flash: function flash() {
+            var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+            if (data) {
+                this.body = data.message;
+                this.level = data.level;
+            }
 
             this.flashShow();
             this.flashHide();
