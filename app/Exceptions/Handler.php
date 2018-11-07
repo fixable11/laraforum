@@ -55,6 +55,10 @@ class Handler extends ExceptionHandler
         if($exception instanceof ThrottleException){
             return response($exception->getMessage(), 429);
         }
+        if($exception instanceof ThreadIsLocked) {
+            return response('Thread is locked', 422);
+        }
+
 
         return parent::render($request, $exception);
     }

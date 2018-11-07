@@ -9,6 +9,7 @@ use App\Events\ThreadHasNewReply;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Events\ThreadReceivedNewReply;
+use App\Exceptions\ThreadIsLocked;
 
 class Thread extends Model
 {
@@ -19,6 +20,10 @@ class Thread extends Model
     protected $with = ['creator', 'channel'];
 
     protected $appends = ['isSubscribedTo'];
+
+    protected $casts = [
+        'locked' => 'boolean',
+    ];
 
     protected static function boot()
     {
@@ -51,6 +56,10 @@ class Thread extends Model
 
     public function addReply($reply)
     {
+        if($this->locked){
+            throw new ThreadIsLocked();
+        }
+
         $reply = $this->replies()->create($reply);
 
         event(new ThreadReceivedNewReply($reply));
