@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use Carbon\Carbon;
+use Zttp\Zttp;
+use function GuzzleHttp\json_encode;
+use App\Rules\Recaptcha;
 
 class ThreadsController extends Controller
 {
@@ -58,6 +61,7 @@ class ThreadsController extends Controller
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => ['required', new Recaptcha],
         ]);
 
         $thread = Thread::create([
