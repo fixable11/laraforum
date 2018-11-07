@@ -10599,6 +10599,10 @@ body {
   margin-top: 20px;
 }
 
+.card__reply {
+  margin-top: 0;
+}
+
 .level__hr {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -10625,5 +10629,9 @@ body {
 
 .paginationWrap {
   margin-top: 20px;
+}
+
+.btn__bestReply {
+  margin-left: auto;
 }
 

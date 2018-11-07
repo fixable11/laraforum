@@ -1,6 +1,6 @@
 <template>
     <div class="replyWrap">
-        <div :id="'reply-' + id" class="card-header" style="margin-top: 50px">
+        <div :id="'reply-' + id" class="card-header" style="margin-top: 50px" :class="isBest ? 'bg-success' : ''">
             <div class="cardOwn">
                 <div class="cardOwn__left">
                     <a class="cardOwn__link" :href="'/profiles/' + data.owner.name"
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="card reply">
+        <div class="card card__reply reply">
 
             <div class="card-body">
 
@@ -33,13 +33,16 @@
                 <div v-else v-html="body"></div>
             </div>
 
-                <div class="card-footer card-footer_own" v-if="canUpdate">
+                <div class="card-footer card-footer_own">
+                    <div v-if="authorize('updateReply', reply)">
+                        <button class="btn-edit btn btn-sm btn-primary" 
+                        @click="editing">Edit</button>
+                        <button type="submit" class="btn-delete btn btn-danger btn-sm"
+                        @click="destroy">Delete</button>
+                    </div>
 
-                    <button class="btn-edit btn btn-sm btn-primary" 
-                    @click="editing">Edit</button>
-
-                    <button type="submit" class="btn-delete btn btn-danger btn-sm"
-                    @click="destroy">Delete</button>
+                    <button type="submit" class="btn__bestReply btn-delete btn btn-success btn-sm"
+                    @click="markBestReply">Best Reply</button>
 
                 </div>
             
@@ -62,20 +65,20 @@
                 editState: false,
                 id: this.data.id,
                 body: this.data.body,
+                isBest: this.data.isBest,
+                reply: this.data
             }
         },
         computed: {
-            signedIn(){
-                return window.App.signedIn;
-            },
-
-            canUpdate(){
-                return this.authorize(user => this.data.user_id == user.id);
-                //return this.data.user_id == window.App.user.id
-            },
             ago(){
                 return moment(this.data.created_at).fromNow();
             }
+        },
+
+        created(){
+            window.events.$on('best-reply-selected', id => {
+                this.isBest = (id === this.id);
+            });
         },
 
         methods: {
@@ -111,6 +114,11 @@
 
                 this.editState = false;
                 
+            },
+            markBestReply(){
+                axios.post('/replies/' + this.data.id + '/best');
+
+                window.events.$emit('best-reply-selected', this.data.id);
             }
         }
     }

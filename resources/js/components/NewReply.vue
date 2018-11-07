@@ -33,9 +33,7 @@
             }
         },
         computed:{
-            signedIn(){
-                return window.App.signedIn;
-            }
+            
         },
 
         methods: {

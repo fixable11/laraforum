@@ -110,6 +110,9 @@ body{
 
 .card{
     margin-top: 20px;
+    &__reply{
+        margin-top: 0;
+    }
 }
 
 .level{
@@ -138,4 +141,8 @@ body{
 
 .paginationWrap{
     margin-top: 20px;
+}
+
+.btn__bestReply{
+    margin-left: auto;
 }

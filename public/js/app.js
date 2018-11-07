@@ -30480,12 +30480,24 @@ if (token) {
 
 window.Vue = __webpack_require__(161);
 
-window.Vue.prototype.authorize = function (hander) {
+var authorizations = __webpack_require__(209);
 
-    var user = window.App.user;
+window.Vue.prototype.authorize = function () {
 
-    return user ? hander(user) : false;
+    if (!window.App.signedIn) return false;
+
+    for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+    }
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 window.events = new Vue();
 
@@ -64555,6 +64567,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -64568,26 +64583,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             editState: false,
             id: this.data.id,
-            body: this.data.body
+            body: this.data.body,
+            isBest: this.data.isBest,
+            reply: this.data
         };
     },
 
     computed: {
-        signedIn: function signedIn() {
-            return window.App.signedIn;
-        },
-        canUpdate: function canUpdate() {
-            var _this = this;
-
-            return this.authorize(function (user) {
-                return _this.data.user_id == user.id;
-            });
-            //return this.data.user_id == window.App.user.id
-        },
         ago: function ago() {
             return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow();
         }
     },
+
+    created: function created() {
+        var _this = this;
+
+        window.events.$on('best-reply-selected', function (id) {
+            _this.isBest = id === _this.id;
+        });
+    },
+
 
     methods: {
         editing: function editing() {
@@ -64623,6 +64638,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             this.editState = false;
+        },
+        markBestReply: function markBestReply() {
+            axios.post('/replies/' + this.data.id + '/best');
+
+            window.events.$emit('best-reply-selected', this.data.id);
         }
     }
 });
@@ -65042,6 +65062,7 @@ var render = function() {
       "div",
       {
         staticClass: "card-header",
+        class: _vm.isBest ? "bg-success" : "",
         staticStyle: { "margin-top": "50px" },
         attrs: { id: "reply-" + _vm.id }
       },
@@ -65069,7 +65090,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "card reply" }, [
+    _c("div", { staticClass: "card card__reply reply" }, [
       _c("div", { staticClass: "card-body" }, [
         _vm.editState
           ? _c("div", [
@@ -65132,28 +65153,40 @@ var render = function() {
           : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
-      _vm.canUpdate
-        ? _c("div", { staticClass: "card-footer card-footer_own" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn-edit btn btn-sm btn-primary",
-                on: { click: _vm.editing }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn-delete btn btn-danger btn-sm",
-                attrs: { type: "submit" },
-                on: { click: _vm.destroy }
-              },
-              [_vm._v("Delete")]
-            )
-          ])
-        : _vm._e()
+      _c("div", { staticClass: "card-footer card-footer_own" }, [
+        _vm.authorize("updateReply", _vm.reply)
+          ? _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn-edit btn btn-sm btn-primary",
+                  on: { click: _vm.editing }
+                },
+                [_vm._v("Edit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn-delete btn btn-danger btn-sm",
+                  attrs: { type: "submit" },
+                  on: { click: _vm.destroy }
+                },
+                [_vm._v("Delete")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn__bestReply btn-delete btn btn-success btn-sm",
+            attrs: { type: "submit" },
+            on: { click: _vm.markBestReply }
+          },
+          [_vm._v("Best Reply")]
+        )
+      ])
     ])
   ])
 }
@@ -65255,11 +65288,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
-    computed: {
-        signedIn: function signedIn() {
-            return window.App.signedIn;
-        }
-    },
+    computed: {},
 
     methods: {
         addReply: function addReply() {
@@ -66284,6 +66313,21 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+
+module.exports = {
+    updateReply: function updateReply(reply) {
+        return reply.user_id === user.id;
+    }
+};
 
 /***/ })
 /******/ ]);
