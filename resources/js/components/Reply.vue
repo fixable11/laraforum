@@ -3,13 +3,13 @@
         <div :id="'reply-' + id" class="card-header" style="margin-top: 50px" :class="isBest ? 'bg-success' : ''">
             <div class="cardOwn">
                 <div class="cardOwn__left">
-                    <a class="cardOwn__link" :href="'/profiles/' + data.owner.name"
-                    v-text="data.owner.name">
+                    <a class="cardOwn__link" :href="'/profiles/' + reply.owner.name"
+                    v-text="reply.owner.name">
                     </a>
                     said <span v-text="ago"></span>
                 </div>
                 <div class="cardOwn__right" v-if="signedIn">                    
-                    <favorite :reply="data" ></favorite>
+                    <favorite :reply="reply" ></favorite>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <div v-else v-html="body"></div>
             </div>
 
-                <div class="card-footer card-footer_own">
+                <div class="card-footer card-footer_own" v-if="authorize('updateReply', reply) || authorize('updateThread', reply.thread)">
                     <div v-if="authorize('updateReply', reply)">
                         <button class="btn-edit btn btn-sm btn-primary" 
                         @click="editing">Edit</button>
@@ -42,7 +42,7 @@
                     </div>
 
                     <button type="submit" class="btn__bestReply btn-delete btn btn-success btn-sm"
-                    @click="markBestReply">Best Reply</button>
+                    @click="markBestReply" v-if="authorize('updateThread', reply.thread)">Best Reply</button>
 
                 </div>
             
@@ -56,22 +56,21 @@
     import moment from 'moment';
 
     export default {
-        props: ['data'],
+        props: ['reply'],
 
         components: { Favorite },
 
         data(){
             return {
                 editState: false,
-                id: this.data.id,
-                body: this.data.body,
-                isBest: this.data.isBest,
-                reply: this.data
+                id: this.reply.id,
+                body: this.reply.body,
+                isBest: this.reply.isBest,
             }
         },
         computed: {
             ago(){
-                return moment(this.data.created_at).fromNow();
+                return moment(this.reply.created_at).fromNow();
             }
         },
 
@@ -85,11 +84,11 @@
             editing(){
                 this.editState = !this.editState;
                 if(this.editState == false){
-                    this.body = this.data.body;
+                    this.body = this.reply.body;
                 }
             },
             update(){
-                axios.put('/replies/' + this.data.id, {
+                axios.put('/replies/' + this.id, {
                     body: this.body
                 }).then(response => {
                     if(response.data.success){
@@ -99,13 +98,13 @@
                     flash(error.response.data, 'danger');
                 });
 
-                this.data.body = this.body;
+                this.reply.body = this.body;
                 this.editState = false;
             },
             destroy(){
-                axios.delete('/replies/' + this.data.id).then(response => {
+                axios.delete('/replies/' + this.id).then(response => {
                     if(response.data.success){
-                        this.$emit('deleted', this.data.id);
+                        this.$emit('deleted', this.id);
                         // $(this.$el).fadeOut(300, () => {
                         //     flash(response.data.status);
                         // });
@@ -116,9 +115,9 @@
                 
             },
             markBestReply(){
-                axios.post('/replies/' + this.data.id + '/best');
+                axios.post('/replies/' + this.id + '/best');
 
-                window.events.$emit('best-reply-selected', this.data.id);
+                window.events.$emit('best-reply-selected', this.id);
             }
         }
     }
