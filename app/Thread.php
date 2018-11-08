@@ -15,23 +15,43 @@ class Thread extends Model
 {
     use RecordsActivity;
 
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * The relations to greedy load on every query.
+     *
+     * @var array
+     */
     protected $with = ['creator', 'channel'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = ['isSubscribedTo'];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
         'locked' => 'boolean',
     ];
 
+    /**
+     * Boot the model.
+     * It triggers when model creating
+     */
     protected static function boot()
     {
         parent::boot();
-
-        // static::addGlobalScope('replyCount', function ($builder) {
-        //     $builder->withCount('replies');
-        // });
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
@@ -39,21 +59,42 @@ class Thread extends Model
 
     }
 
+    /**
+     * Get a string path for the thread.
+     *
+     * @return string
+     */
     public function path()
     {
         return "/threads/{$this->channel->slug}/{$this->slug}";
     }
 
+    /**
+     * A thread may have many replies relation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
 
+    /**
+     * A thread belongs to a creator realation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Add a reply to the thread.
+     *
+     * @param  array $reply
+     * @return Model
+     */
     public function addReply($reply)
     {
         if($this->locked){
@@ -67,16 +108,22 @@ class Thread extends Model
         return $reply;
     }
 
+    /**
+     * A thread is belongs to channel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class);
     }
 
     /**
-     * Undocumented function
+     * Apply all relevant thread filters.
+     * This method allow to continue query
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param [type] $filters
+     * @param ThreadFilters $filters
      * @return void
      */
     public function scopeFilter($query, $filters)
@@ -84,14 +131,26 @@ class Thread extends Model
         return $filters->apply($query);
     }
 
+    /**
+     * Subscribe a user to the current thread.
+     *
+     * @param  int|null $userId
+     * @return $this
+     */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id(),
-
         ]);
+
+        return $this;
     }
 
+    /**
+     * Unsubscribe a user from the current thread.
+     *
+     * @param int|null $userId
+     */
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()
@@ -99,11 +158,22 @@ class Thread extends Model
             ->delete();
     }
 
+    /**
+     * A thread have many subscriptions relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
     }
 
+    /**
+     * Determine if the current user is subscribed to the thread.
+     * Laravel accesor.
+     *
+     * @return boolean
+     */
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()
@@ -111,6 +181,12 @@ class Thread extends Model
             ->exists(); 
     }
 
+    /**
+     * Determine if the thread has been updated since the user last read it.
+     *
+     * @param  User $user
+     * @return bool
+     */
     public function hasUpdatesFor($user)
     {
         $key = $user->visitedThreadCacheKey($this);
@@ -118,26 +194,52 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function trending()
     {
         return $this->hasOne('App\TrendingThreads', 'thread_id');
     }
 
+    /**
+     * Count and return amount of visits
+     *
+     * @return int|0
+     */
     public function visits()
     {
         return $this->visits_count ?? '0';
     }
 
+    /**
+     * Returns popular threads
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function getPopular()
     {
         return self::orderBy('visits', 'desc')->take(5)->get();
     }
 
+    /**
+     * Get the route key name.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     * Set the proper slug attribute.
+     * Laravel mutator.
+     *
+     * @param string $value
+     */
     public function setSlugAttribute($value)
     {
         if(static::where('slug', $slug = str_slug($value))->exists()){
@@ -147,6 +249,14 @@ class Thread extends Model
         $this->attributes['slug'] = $slug;
     }
 
+
+    /**
+     * If there is a given slug this method increment it by one
+     * and return it
+     *
+     * @param string $slug
+     * @return string
+     */
     public function incrementSlug($slug)
     {
         $max = static::where('title', $this->title)->latest('id')->value('slug');
@@ -160,6 +270,11 @@ class Thread extends Model
         return "{$slug}-2";
     }
 
+    /**
+     * Mark the given reply as the best answer.
+     *
+     * @param Reply $reply
+     */
     public function markBestReply(Reply $reply)
     {
         $this->best_reply_id = $reply->id;
