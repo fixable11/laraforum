@@ -6,10 +6,22 @@ use Illuminate\Validation\ValidationException;
 
 class Invalidkeywords
 {
+
+    /**
+     * All registered invalid keywords.
+     *
+     * @var array
+     */
     protected $keywords = [
         'foo'
     ];
 
+    /**
+     * Detect spam.
+     *
+     * @param  string $body
+     * @throws \Exception
+     */
     public function detect($body)
     {
 
