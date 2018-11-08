@@ -15,6 +15,9 @@ use App\Rules\Recaptcha;
 class ThreadsController extends Controller
 {
 
+    /**
+     * Create a new ThreadsController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -23,6 +26,8 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Channel      $channel
+     * @param ThreadFilters $filters
      * @return \Illuminate\Http\Response
      */
     public function index(Channel $channel, ThreadFilters $filters)
@@ -52,7 +57,6 @@ class ThreadsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store()
@@ -83,7 +87,7 @@ class ThreadsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $channelId
+     * @param \App\Channel $channelId
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
@@ -114,7 +118,7 @@ class ThreadsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Channel $channel
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
@@ -149,6 +153,13 @@ class ThreadsController extends Controller
 
     }
 
+    /**
+     * Fetch all relevant threads.
+     *
+     * @param Channel       $channel
+     * @param ThreadFilters $filters
+     * @return mixed
+     */
     private function getThreads(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);

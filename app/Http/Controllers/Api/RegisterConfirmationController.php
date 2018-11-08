@@ -8,6 +8,12 @@ use App\User;
 
 class RegisterConfirmationController extends Controller
 {
+
+    /**
+     * Compares given token and database token if they equal or not.
+     *
+     * @return mixed
+     */
     public function index()
     {
         try {

@@ -13,18 +13,22 @@ use App\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {
-
+    
+    /**
+     * Create a new RepliesController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth', ['except' => 'index']);
     }
 
     /**
-     * Undocumented function
+     * Persist a new reply.
      *
-     * @param [type] $channelId
-     * @param \App\Thread $thread
-     * @return void
+     * @param  integer           $channelId
+     * @param  Thread            $thread
+     * @param  CreatePostRequest $request
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function store($channelId, Thread $thread, CreatePostRequest $request)
     { 
@@ -34,6 +38,12 @@ class RepliesController extends Controller
         ])->load('owner'); 
     }
 
+    /**
+     * Delete the given reply.
+     *
+     * @param  Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Reply $reply)
     {
         $this->authorize('update', $reply);
@@ -50,6 +60,11 @@ class RepliesController extends Controller
         return back();
     }
 
+    /**
+     * Update an existing reply.
+     *
+     * @param Reply $reply
+     */
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
@@ -69,6 +84,12 @@ class RepliesController extends Controller
         }
     }
 
+    /**
+     * Fetch all relevant replies.
+     *
+     * @param int    $channelId
+     * @param Thread $thread
+     */
     public function index($channelId, Thread $thread)
     {
         return $thread->replies()->paginate(5);
