@@ -8,6 +8,9 @@ namespace App\Traits;
 trait RecordsActivity
 {
 
+    /**
+     * Boot the trait.
+     */
     public static function bootRecordsActivity()
     {
         if(auth()->guest()) return;
@@ -24,12 +27,22 @@ trait RecordsActivity
         
     }
 
+    /**
+     * Fetch all model events that require activity recording.
+     *
+     * @return array
+     */
     protected static function getActivitiesToRecord()
     {
         return ['created'];
     }
 
-    public function recordAcivity($event)
+    /**
+     * Record new activity for the model.
+     *
+     * @param string $event
+     */
+    public function recordActivity($event)
     {
         $this->activity()->create([
             'user_id' => auth()->id(),
@@ -37,11 +50,23 @@ trait RecordsActivity
         ]);
     }
 
+    /**
+     * Determine the activity type.
+     *
+     * @param  string $event
+     * @return string
+     */
     public function activity()
     {
         return $this->morphMany('App\Activity', 'subject');
     }
 
+    /**
+     * Determine the activity type.
+     *
+     * @param  string $event
+     * @return string
+     */
     public function getActivityType($event)
     {
         return $event . '_' . strtolower((new \ReflectionClass($this))->getShortName());
