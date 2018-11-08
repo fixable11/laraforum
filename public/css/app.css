@@ -10645,3 +10645,19 @@ body {
   margin-left: auto;
 }
 
+.searchForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.searchForm__field {
+  border-right: none;
+}
+
+.searchForm__submit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+

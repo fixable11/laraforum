@@ -13,6 +13,19 @@
         </div>
 
         <div class="col-md-4">
+
+        <div class="card">
+                <div class="card-header">
+                    Search
+                </div>
+                <div class="card-body">
+                    <form action="/threads/search" method="GET" class="searchForm">
+                        <input class="form-control searchForm__field" name="q" type="text" placeholder="What are we looking for?">
+                        <button type="submit" class="btn btn-default searchForm__submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+
             @if (count($trending))
                 <div class="card">
                     <div class="card-header">
@@ -29,8 +42,8 @@
                     </div>
                 </div>
             @endif
-
         </div>
+
     </div>
 </div>
 @endsection

@@ -153,3 +153,13 @@ body{
 .btn__bestReply{
     margin-left: auto;
 }
+
+.searchForm{
+    display: flex;
+    &__field{
+        border-right: none;
+    }
+    &__submit{
+        display: flex;
+    }
+}

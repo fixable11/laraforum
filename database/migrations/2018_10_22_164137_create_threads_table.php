@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateThreadsTable extends Migration
 {
@@ -31,6 +32,8 @@ class CreateThreadsTable extends Migration
                 ->on('replies')
                 ->onDelete('set null');
         });
+
+        DB::statement('ALTER TABLE threads ADD FULLTEXT fulltext_index(slug, title, body)');
     }
 
     /**

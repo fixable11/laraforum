@@ -33,6 +33,7 @@ Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->nam
 
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed');
+Route::get('/threads/search', 'SearchController@show')->name('search');
 Route::get('/threads/{channel}', 'ThreadsController@index');
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');

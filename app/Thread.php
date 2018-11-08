@@ -10,10 +10,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use App\Events\ThreadReceivedNewReply;
 use App\Exceptions\ThreadIsLocked;
+use App\Traits\FullTextSearch;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, FullTextSearch;
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -43,6 +44,15 @@ class Thread extends Model
      */
     protected $casts = [
         'locked' => 'boolean',
+    ];
+
+    /**
+     * The columns of the full text index
+     */
+    protected $searchable = [
+        'slug',
+        'title',
+        'body'
     ];
 
     /**
