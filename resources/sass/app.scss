@@ -137,6 +137,13 @@ body{
     &__creator{
         
     }
+    &__edit{
+        margin-top: 10px;
+    }
+    &__leftButtonsArea{
+        display: flex;
+    }
+
 }
 
 .paginationWrap{

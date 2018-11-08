@@ -105,9 +105,6 @@
                 axios.delete('/replies/' + this.id).then(response => {
                     if(response.data.success){
                         this.$emit('deleted', this.id);
-                        // $(this.$el).fadeOut(300, () => {
-                        //     flash(response.data.status);
-                        // });
                     }
                 });
 

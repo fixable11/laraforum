@@ -64357,18 +64357,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Replies: __WEBPACK_IMPORTED_MODULE_0__components_Replies_vue___default.a, SubscribeButton: __WEBPACK_IMPORTED_MODULE_1__components_SubscribeButton_vue___default.a },
 
     computed: {},
+    data: function data() {
+        return {
+            repliesCount: this.thread.replies_count,
+            locked: this.thread.locked,
+            editState: false,
+            form: {
+                title: this.thread.title,
+                body: this.thread.body
+            }
+        };
+    },
+
     methods: {
         toggleLock: function toggleLock() {
             axios[this.locked ? 'delete' : 'post']('/locked-threads/' + this.thread.slug);
             this.locked = !this.locked;
-        }
-    },
+        },
+        editing: function editing() {
+            this.editState = !this.editState;
+            if (this.editState == false) {
+                this.form.title = this.thread.title;
+                this.form.body = this.thread.body;
+            }
+        },
+        update: function update() {
+            axios.put('/threads/' + this.thread.channel.slug + '/' + this.thread.slug, {
+                title: this.form.title,
+                body: this.form.body
+            }).then(function (response) {
+                flash('Your thread has been updated.');
+            }).catch(function (error) {
+                flash(error.response.data, 'danger');
+            });
 
-    data: function data() {
-        return {
-            repliesCount: this.thread.replies_count,
-            locked: this.thread.locked
-        };
+            this.thread.title = this.form.title;
+            this.thread.body = this.form.body;
+            this.editState = false;
+        }
     }
 });
 
@@ -64658,9 +64684,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.delete('/replies/' + this.id).then(function (response) {
                 if (response.data.success) {
                     _this2.$emit('deleted', _this2.id);
-                    // $(this.$el).fadeOut(300, () => {
-                    //     flash(response.data.status);
-                    // });
                 }
             });
 

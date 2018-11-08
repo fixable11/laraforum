@@ -10627,6 +10627,16 @@ body {
           align-items: flex-end;
 }
 
+.thread__edit {
+  margin-top: 10px;
+}
+
+.thread__leftButtonsArea {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .paginationWrap {
   margin-top: 20px;
 }
