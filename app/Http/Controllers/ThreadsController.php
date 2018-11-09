@@ -8,8 +8,6 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use Carbon\Carbon;
-use Zttp\Zttp;
-use function GuzzleHttp\json_encode;
 use App\Rules\Recaptcha;
 
 class ThreadsController extends Controller

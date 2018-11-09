@@ -1,14 +1,11 @@
 <template>
     <div v-if="signedIn">                       
         <div class="form-group" style="margin-top: 50px">
-            <textarea   rows="5" 
-                        placeholder="Body" 
-                        name="body" 
-                        class="form-control" 
-                        id="body" 
-                        required 
-                        v-model="body"></textarea>
-        
+            <wysiwyg placeholder="Have to something say?" 
+                     name="body" 
+                     v-model="body" 
+                     :shouldClear="completed"
+                     @completed="completed = false"></wysiwyg>
 
             <button type="submit"
                     class="btn btn-info"
@@ -30,6 +27,7 @@
         data(){
             return {
                 body: '',
+                completed: false,
             }
         },
         computed:{
@@ -41,6 +39,7 @@
                 axios.post(this.endpoint, {body: this.body})
                     .then(response => {
                         this.body = '';
+                        this.completed = true;
 
                         flash('Your reply has been posted');
 

@@ -38,10 +38,11 @@
 
                         <div class="form-group">
                             <label for="body">Body:</label>
-                            <textarea required name="body" type="text" id="body" class="form-control" placeholder="body">{{ old('body') }}</textarea>
+                            <wysiwyg name="body"></wysiwyg>
+                            {{-- <textarea required name="body" type="text" id="body" class="form-control" placeholder="body">{{ old('body') }}</textarea> --}}
                         </div>
 
-                        <div class="g-recaptcha" data-sitekey="6LcZTXkUAAAAAFAts0QFSNNRNEitu-LxgZ3UrXMw"></div>
+                        <div class="g-recaptcha" data-sitekey="6Lf6q3kUAAAAAGZoRa4qoRZ1W0lPOk7p2IL-4CLK"></div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Publish</button>

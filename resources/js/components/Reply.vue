@@ -19,7 +19,8 @@
 
                 <div v-if="editState">
                     <form @submit.prevent="update">
-                        <textarea class="form-control" name="" v-model="body" required></textarea>
+                        <wysiwyg v-model="body"></wysiwyg>
+                        
                         <div class="reply__buttonsArea">
 
                             <button type="submit" class="btn-update btn btn-info btn-sm">Update</button>

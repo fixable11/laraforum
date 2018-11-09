@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="level__hr"></div>
-                <div class="body">{{ $thread->body }}</div>
+                <div class="body">{!! $thread->body !!}</div>
             </article>
         </div>
         <div class="card-footer">

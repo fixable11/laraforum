@@ -10,6 +10,8 @@
 //Bootstrap vue
 //@import '~bootstrap/scss/bootstrap';
 
+@import '~trix/dist/trix';
+
 @import 'sections/replies';
 
 
@@ -162,4 +164,20 @@ body{
     &__submit{
         display: flex;
     }
+}
+
+.editor-content blockquote,
+.body blockquote,
+.thread__desc blockquote {
+    font-style: italic;
+}
+  
+.editor-content pre,
+.body pre,
+.thread__desc pre {
+    background-color: #f5f4f4;
+    border: 1px solid #c7c1c1;
+    border-radius: 5px;
+    padding: 10px;
+     
 }

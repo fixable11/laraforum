@@ -18,11 +18,13 @@
         </div>
         <div class="card-body">
 
-            <div v-if="!editState" class="thread__desc" v-text="form.body"></div>
+            <div v-if="!editState" class="thread__desc" v-html="form.body"></div>
 
             <div class="" v-else>
                 <form @submit.prevent="update">
-                    <textarea v-model="form.body" rows="6" class="form-control"></textarea>
+
+                    <wysiwyg name="body" v-model="form.body"></wysiwyg>
+                    
                     <div class="reply__buttonsArea">
 
                         <button type="submit" class="btn-update btn btn-info btn-sm">Update</button>

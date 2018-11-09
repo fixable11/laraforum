@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.5.0",
-        "moment": "^2.22.2"
+        "moment": "^2.22.2",
+        "trix": "^1.0.0"
     }
 }
