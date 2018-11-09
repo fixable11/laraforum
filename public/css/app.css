@@ -11254,12 +11254,14 @@ body {
 
 .editor-content blockquote,
 .body blockquote,
+.card-body blockquote,
 .thread__desc blockquote {
   font-style: italic;
 }
 
 .editor-content pre,
 .body pre,
+.card-body pre,
 .thread__desc pre {
   background-color: #f5f4f4;
   border: 1px solid #c7c1c1;

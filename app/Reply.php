@@ -8,6 +8,7 @@ use App\Traits\Favoritable;
 use App\Traits\RecordsActivity;
 use App\Thread;
 use Carbon\Carbon;
+use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
@@ -135,5 +136,16 @@ class Reply extends Model
     public function getIsBestAttribute()
     {
         return $this->isBest();
-    }    
+    }
+    
+    /**
+     * Access the body attribute.
+     *
+     * @param  string $body
+     * @return string
+     */
+    public function getBodyAttribute($body)
+    {
+        return Purify::clean($body);
+    }
 }

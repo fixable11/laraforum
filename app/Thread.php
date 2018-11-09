@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Events\ThreadReceivedNewReply;
 use App\Exceptions\ThreadIsLocked;
 use App\Traits\FullTextSearch;
+use Stevebauman\Purify\Facades\Purify;
 
 class Thread extends Model
 {
@@ -290,6 +291,17 @@ class Thread extends Model
         $this->best_reply_id = $reply->id;
 
         $this->save();
+    }
+
+    /**
+     * Access the body attribute.
+     *
+     * @param  string $body
+     * @return string
+     */
+    public function getBodyAttribute($body)
+    {
+        return Purify::clean($body);
     }
 
 }
