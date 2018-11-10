@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -30,12 +31,6 @@ $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
 
     return [
-        'user_id' => function(){
-            return factory('App\User')->create()->id;
-        },
-        'channel_id' => function(){
-            return factory('App\Channel')->create()->id;
-        },
         'title' => $title,
         'body' => $faker->paragraph,
         'visits' => 0,
@@ -45,6 +40,14 @@ $factory->define(App\Thread::class, function (Faker $faker) {
 });
 
 $factory->define(App\Channel::class, function (Faker $faker) {
+    $name = $faker->word;
+    return [
+        'name' => $name,
+        'slug' => $name,
+    ];
+});
+
+$factory->define(App\Category::class, function (Faker $faker) {
     $name = $faker->word;
     return [
         'name' => $name,

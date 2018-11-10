@@ -56,3 +56,5 @@ Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotification
 Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
 
 Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
+
+Route::get('/cat/{category}', 'CategoryController@index')->name('category.index');
