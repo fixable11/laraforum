@@ -30480,12 +30480,17 @@ Vue.component('avatar-form', __webpack_require__(200));
 Vue.component('wysiwyg', __webpack_require__(206));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
 $(document).ready(function () {
 
-  var common = new __WEBPACK_IMPORTED_MODULE_0__Common__["a" /* default */]();
+    var common = new __WEBPACK_IMPORTED_MODULE_0__Common__["a" /* default */]();
+
+    //Category accordion
+    $('.categoriesBlock .categoryBlock .card-header').on('click', function (e) {
+        $(this).next().slideToggle();
+    });
 });
 
 /***/ }),

@@ -5,12 +5,7 @@
     <div class="row">
         <div class="col-md-8">
             
-            <div class="categoriesBlock active">
-                @foreach ($categories as $category)
-                    @include('categories.partials._list', ['category' => $category])
-                @endforeach
-            </div>
-
+            @include('categories.partials._list')
             <div class="paginationWrap">
                 
             </div>

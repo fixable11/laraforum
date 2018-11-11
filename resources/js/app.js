@@ -32,9 +32,11 @@ const app = new Vue({
 
 $(document).ready(function(){
 
-    
-
     let common = new Common();
   
+    //Category accordion
+    $('.categoriesBlock .categoryBlock .card-header').on('click', function (e) {
+        $(this).next().slideToggle();
+    });
 
 });

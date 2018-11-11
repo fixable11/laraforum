@@ -3,8 +3,13 @@
     <ul class="list-group list-group-flush categoryBlock__ul">
         @forelse ($category->channels as $channel)
             <li class="list-group-item categoryBlock__li">
-                <i class="categoryBlock__fa fas fa-comments"></i> 
-                <a href="/threads/{{ $channel->slug }}" class="categoryBlock__link">{{ $channel->name }}</a>
+                <div class="categoryBlock__liLeft">
+                    <i class="categoryBlock__fa fas fa-comments"></i> 
+                </div>
+                <div class="categoryBlock__liRight">
+                    <a href="/threads/{{ $channel->slug }}" class="categoryBlock__link">{{ ucfirst($channel->name) }}</a>
+                    <div class="categoryBlock__desc">{{ $channel->description}}</div>
+                </div>
             </li>
         @empty
             <p>There are no relevant result</p>

@@ -18,6 +18,7 @@ class CreateChannelsTable extends Migration
             $table->string('name', 50);
             $table->string('slug', 50);
             $table->unsignedInteger('category_id');
+            $table->text('description');
             $table->timestamps();
 
             $table->foreign('category_id')

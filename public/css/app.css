@@ -11273,7 +11273,28 @@ body {
   color: #797878;
 }
 
+.categoryBlock__li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.categoryBlock__liLeft {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
 .categoryBlock__link {
-  margin-left: 5px;
+  font-weight: bold;
+}
+
+.categoryBlock .card-header {
+  cursor: pointer;
+  -webkit-transition: background-color .4s;
+  transition: background-color .4s;
+}
+
+.categoryBlock .card-header:hover {
+  background-color: #9e9d9d;
 }
 

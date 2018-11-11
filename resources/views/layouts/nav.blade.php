@@ -22,6 +22,7 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link" href="/threads">All threads</a>
+                                    <a class="nav-link" href="/categories">Categories</a>
                                     @if (auth()->check())
                                     <a class="nav-link" href="/threads?by={{ auth()->user()->name }}">
                                         Mythreads

@@ -21,7 +21,7 @@ Route::get('/test',function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('threads', 'ThreadsController@index')->name('threads');
 Route::get('/threads/create', 'ThreadsController@create');
@@ -57,4 +57,5 @@ Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->nam
 
 Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
 
-Route::get('/cat/{category}', 'CategoryController@index')->name('category.index');
+Route::get('/categories', 'CategoryController@index')->name('category.index');
+Route::get('/categories/{category}', 'CategoryController@show')->name('category.show');

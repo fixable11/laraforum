@@ -189,9 +189,23 @@ body{
         color: #797878;
     }
     &__li{
+        display: flex;
+    }
+    &__liLeft{
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+    &__liRight{
         
     }
     &__link{
-        margin-left: 5px;
+        font-weight: bold;
+    }
+    .card-header{
+        cursor: pointer;
+        transition: background-color .4s;
+        &:hover{
+            background-color: #9e9d9d;
+        }
     }
 }
