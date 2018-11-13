@@ -15,6 +15,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+//ThreadsSearch 
+
+Route::get('/threads/search', 'SearchController@show')->name('search');
+
 //Threads
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
 Route::get('/{category}/{channel}', 'ThreadsController@index')->name('threads.index');
@@ -27,13 +31,9 @@ Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirme
 Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
-
-
-
-Route::get('/threads/search', 'SearchController@show')->name('search');
-
-Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
-Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
+//Threads subscriptions
+Route::post('/{category}/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
+Route::delete('/{category}/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
 
 Route::post('/replies/{reply}/best', 'BestRepliesController@store')->name('best-replies.store');
 

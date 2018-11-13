@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\Category;
+use App\Channel;
 
 class ThreadSubscriptionsController extends Controller
 {
@@ -16,11 +18,12 @@ class ThreadSubscriptionsController extends Controller
     /**
      * Store a new thread subscription.
      *
-     * @param int    $channelId
-     * @param Thread $thread
+     * @param App\Category $category
+     * @param App\Channel $channel
+     * @param App\Thread $thread
      */
 
-    public function store($channelId, Thread $thread)
+    public function store(Category $category, Channel $channel, Thread $thread)
     {
         $thread->subscribe();
     }
@@ -28,10 +31,11 @@ class ThreadSubscriptionsController extends Controller
     /**
      * Delete an existing thread subscription.
      *
-     * @param int    $channelId
-     * @param Thread $thread
+     * @param App\Category $category
+     * @param App\Channel $channel
+     * @param App\Thread $thread
      */
-    public function destroy($channelId, Thread $thread)
+    public function destroy(Category $category, Channel $channel, Thread $thread)
     {
         $thread->unsubscribe();
     }
