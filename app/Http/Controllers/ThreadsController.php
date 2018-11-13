@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use Carbon\Carbon;
-use App\Rules\Recaptcha;
+use App\Category;
+use App\Http\Requests\StoreThreadRequest;
 
 class ThreadsController extends Controller
 {
@@ -24,11 +25,12 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Channel      $channel
+     * @param  App\Category $category
+     * @param  App\Channel  $channel
      * @param ThreadFilters $filters
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Category $category, Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
 
@@ -57,15 +59,9 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreThreadRequest $request)
     {
-        request()->validate([
-            'title' => 'required|spamfree',
-            'body' => 'required|spamfree',
-            'channel_id' => 'required|exists:channels,id',
-            'g-recaptcha-response' => ['required', new Recaptcha],
-        ]);
-
+        
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),
@@ -85,11 +81,12 @@ class ThreadsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Channel $channelId
+     * @param \App\Category $category
+     * @param \App\Channel $channel
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Channel $channel, Thread $thread)
+    public function show(Category $category, Channel $channel, Thread $thread)
     {   
         if(auth()->check()){
             auth()->user()->read($thread);
@@ -120,7 +117,7 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Channel $channel, Thread $thread)
+    public function update(Category $category, Channel $channel, Thread $thread)
     {
         $this->authorize('update', $thread);
 
@@ -138,7 +135,7 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Channel $channel, Thread $thread)
+    public function destroy(Category $category, Channel $channel, Thread $thread)
     {
         $this->authorize('update', $thread);
         $thread->delete();

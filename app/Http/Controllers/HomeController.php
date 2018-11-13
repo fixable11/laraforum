@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Thread;
 
 class HomeController extends Controller
 {
@@ -28,7 +29,7 @@ class HomeController extends Controller
 
         return view('categories.index', [
             'categories' => $categories,
-            'trending' => [],
+            'trending' => Thread::getPopular(),
         ]);
     }
 }

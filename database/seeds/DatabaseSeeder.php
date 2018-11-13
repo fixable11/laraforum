@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             factory(App\Channel::class, 5)->create(['category_id' => $category->id])
                 ->each(function ($channel) use ($user){
 
-                    factory(App\Thread::class)->create([
+                    factory(App\Thread::class, 5)->create([
                             'channel_id' => $channel->id,
                             'user_id' => $user->id,
                         ]);

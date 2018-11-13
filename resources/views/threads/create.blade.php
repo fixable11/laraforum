@@ -16,30 +16,21 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="channel_id">Choose a channel</label>
-                            <select name="channel_id" id="channel_id" class="form-control" required>
-                                <option value="">Choose one..</option>
-
-                                @foreach ($channels as $channel)
-                                <option value="{{ $channel->id }}"
-                                    {{ old('channel_id') == $channel->id ? 'selected' : '' }}>
-                                    {{ $channel->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                            <input type="hidden" class="form-control">
-                        </div>
-
-                        <div class="form-group">
                             <label for="title">Title:</label>
                             <input required value="{{ old('title') }}" name="title" type="text" id="title" class="form-control"
                                 placeholder="title">
                         </div>
-
+                        
+                        <choose-category 
+                        :selected-category="{{ !empty(old('category_id')) ? old('category_id') : '0' }}"
+                        :selected-channel="{{ !empty(old('channel_id')) ? old('channel_id') : '0' }}"
+                        :categories="{{ $categories }}" 
+                        :channels="{{ $channels }}">
+                        </choose-category>
+                        
                         <div class="form-group">
                             <label for="body">Body:</label>
-                            <wysiwyg name="body"></wysiwyg>
-                            {{-- <textarea required name="body" type="text" id="body" class="form-control" placeholder="body">{{ old('body') }}</textarea> --}}
+                            <wysiwyg name="body" value="{{ old('body') }}"></wysiwyg>
                         </div>
 
                         <div class="g-recaptcha" data-sitekey="6Lf6q3kUAAAAAGZoRa4qoRZ1W0lPOk7p2IL-4CLK"></div>

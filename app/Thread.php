@@ -12,6 +12,7 @@ use App\Events\ThreadReceivedNewReply;
 use App\Exceptions\ThreadIsLocked;
 use App\Traits\FullTextSearch;
 use Stevebauman\Purify\Facades\Purify;
+use App\Category;
 
 class Thread extends Model
 {
@@ -36,7 +37,7 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $appends = ['isSubscribedTo'];
+    protected $appends = ['isSubscribedTo', 'category'];
 
     /**
      * The attributes that should be cast to native types.
@@ -76,8 +77,8 @@ class Thread extends Model
      * @return string
      */
     public function path()
-    {
-        return "/threads/{$this->channel->slug}/{$this->slug}";
+    {   
+        return "/{$this->category()->slug}/{$this->channel->slug}/{$this->slug}";
     }
 
     /**
@@ -127,6 +128,19 @@ class Thread extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class);
+    }
+
+    /**
+     * A thread is belongs to category through channel.
+     *
+     * @return \App\Channel
+     */
+    public function category()
+    {
+        $channel = $this->channel;
+        return Category::whereHas('channels', function ($query) use ($channel) {
+            $query->where('id', $channel->id);
+        })->first();
     }
 
     /**
@@ -190,6 +204,17 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists(); 
+    }
+
+    /**
+     * Get category_id attribute depending on thread's channel.
+     * Laravel accesor.
+     *
+     * @return boolean
+     */
+    public function getCategoryAttribute()
+    {
+        return $this->category();
     }
 
     /**

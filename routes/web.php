@@ -11,30 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/test',function(){
-    phpinfo();
-});
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('threads', 'ThreadsController@index')->name('threads');
-Route::get('/threads/create', 'ThreadsController@create');
-Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
-Route::put('/threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
+//Threads
+Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
+Route::get('/{category}/{channel}', 'ThreadsController@index')->name('threads.index');
+Route::get('/{category}/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
+Route::put('/{category}/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
+Route::delete('/{category}/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.destroy');
+Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed')->name('threads.store');
+
+//LockedThreads
 Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
 
-Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
-Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed');
+
+
 Route::get('/threads/search', 'SearchController@show')->name('search');
-Route::get('/threads/{channel}', 'ThreadsController@index');
+
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
 

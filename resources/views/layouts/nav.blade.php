@@ -21,7 +21,6 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link" href="/threads">All threads</a>
                                     <a class="nav-link" href="/categories">Categories</a>
                                     @if (auth()->check())
                                     <a class="nav-link" href="/threads?by={{ auth()->user()->name }}">
@@ -39,7 +38,7 @@
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/threads/create">Create Thread</a>
+                                <a class="nav-link" href="{{ route('threads.create') }}">Create Thread</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

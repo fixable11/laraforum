@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 use App\Channel;
 use Illuminate\Support\Facades\Validator;
+use App\Category;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
                 $channels = Cache::rememberForever('channels', function(){
                     return Channel::all();
                 });
-                $view->with('channels', $channels);
+                $view->with('categories', Category::all());
+                $view->with('channels', Channel::all());
             }
         );
 

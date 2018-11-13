@@ -34,7 +34,7 @@
                 }
             },
             update(){
-                axios.put('/threads/' + this.thread.channel.slug + '/' + this.thread.slug, {
+                axios.put(`/${this.thread.category.slug}/${this.thread.channel.slug}/${this.thread.slug}`, {
                     title: this.form.title,
                     body: this.form.body,
                 }).then((response) => {
