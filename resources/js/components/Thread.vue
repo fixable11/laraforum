@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" v-if="thread.creator">
         <div class="card-body">
             <article>
                 <div class="level">

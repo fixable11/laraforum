@@ -5,11 +5,8 @@
     <div class="row">
         <div class="col-md-8">
             
-            <threads>
+            <threads v-cloak>
                 {{-- @include('threads.partials._list') --}}
-                <div class="paginationWrap">
-                    {{ $threads->links() }}
-                </div>
             </threads>
             
         </div>
