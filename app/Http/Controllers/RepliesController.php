@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CreatePostRequest;
 use App\User;
 use App\Notifications\YouWereMentioned;
+use App\Category;
+use App\Channel;
 
 class RepliesController extends Controller
 {
@@ -25,12 +27,13 @@ class RepliesController extends Controller
     /**
      * Persist a new reply.
      *
-     * @param  integer           $channelId
-     * @param  Thread            $thread
-     * @param  CreatePostRequest $request
+     * @param  App\Category $category
+     * @param  App\Channel $channel
+     * @param  App\Thread  $thread
+     * @param  App\Http\Requests\CreatePostRequest  $request
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store($channelId, Thread $thread, CreatePostRequest $request)
+    public function store(Category $category, Channel $channel, Thread $thread, CreatePostRequest $request)
     { 
         return $thread->addReply([
             'body' => request('body'),
@@ -87,11 +90,12 @@ class RepliesController extends Controller
     /**
      * Fetch all relevant replies.
      *
-     * @param int    $channelId
-     * @param Thread $thread
+     * @param  App\Category $category
+     * @param  App\Channel $channel
+     * @param  App\Thread  $thread
      */
-    public function index($channelId, Thread $thread)
+    public function index(Category $category, Channel $channel, Thread $thread)
     {
-        return $thread->replies()->paginate(5);
+        return $thread->replies()->paginate(Reply::REPLIES_PER_PAGE);
     }
 }

@@ -16,8 +16,11 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 //ThreadsSearch 
-
 Route::get('/threads/search', 'SearchController@show')->name('search');
+
+//Favorite reply
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
+Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
 
 //Threads
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
@@ -37,14 +40,14 @@ Route::delete('/{category}/{channel}/{thread}/subscriptions', 'ThreadSubscriptio
 
 Route::post('/replies/{reply}/best', 'BestRepliesController@store')->name('best-replies.store');
 
-Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('add_reply_to_t');
-Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
-Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
+//Replies
+Route::prefix('/{category}/{channel}/{thread}')->group(function () {
+    Route::post('/replies', 'RepliesController@store')->name('replies.store');
+    Route::get('/replies', 'RepliesController@index')->name('replies.index');
+});
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
-Route::put('/replies/{reply}', 'RepliesController@update');
+Route::put('/replies/{reply}', 'RepliesController@update')->name('replies.update');
 
-Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
-Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
 
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');

@@ -67,6 +67,7 @@
                 id: this.reply.id,
                 body: this.reply.body,
                 isBest: this.reply.isBest,
+                endpoint: location.pathname + '/replies'
             }
         },
         computed: {

@@ -14,6 +14,8 @@ class Reply extends Model
 {
     use Favoritable, RecordsActivity;
 
+    const REPLIES_PER_PAGE = 5;
+
     /**
      * Don't auto-apply mass assignment protection.
      *
