@@ -5,10 +5,12 @@
     <div class="row">
         <div class="col-md-8">
             
-            @include('threads.partials._list')
-            <div class="paginationWrap">
-                {{ $threads->links() }}
-            </div>
+            <threads>
+                {{-- @include('threads.partials._list') --}}
+                <div class="paginationWrap">
+                    {{ $threads->links() }}
+                </div>
+            </threads>
             
         </div>
 

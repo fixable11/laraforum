@@ -23,13 +23,16 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="nav-link" href="/categories">Categories</a>
                                     @if (auth()->check())
-                                    <a class="nav-link" href="/threads?by={{ auth()->user()->name }}">
+                                    <a class="nav-link" href="{{ route('threads.all') }}?by={{ auth()->user()->name }}">
                                         Mythreads
                                     </a>
-                                    <a class="nav-link" href="/threads?popular=1">
+                                    <a class="nav-link" href="{{ route('threads.all') }}">
+                                        All threads
+                                    </a>
+                                    <a class="nav-link" href="{{ route('threads.all') }}?popular=1">
                                         Popular threads
                                     </a>
-                                    <a class="nav-link" href="/threads?unanswered=1">
+                                    <a class="nav-link" href="{{ route('threads.all') }}?unanswered=1">
                                         Unanswered threads
                                     </a>
                                     @endif

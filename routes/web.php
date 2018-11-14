@@ -15,6 +15,11 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+//Profile
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
+Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
+
 //ThreadsSearch 
 Route::get('/threads/search', 'SearchController@show')->name('search');
 
@@ -24,6 +29,7 @@ Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
 
 //Threads
 Route::get('/threads/create', 'ThreadsController@create')->name('threads.create');
+Route::get('/threads/all', 'ThreadsController@index')->name('threads.all');
 Route::get('/{category}/{channel}', 'ThreadsController@index')->name('threads.index');
 Route::get('/{category}/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
 Route::put('/{category}/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
@@ -48,10 +54,6 @@ Route::prefix('/{category}/{channel}/{thread}')->group(function () {
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
 Route::put('/replies/{reply}', 'RepliesController@update')->name('replies.update');
 
-
-Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
-Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
-Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
 
 Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
 

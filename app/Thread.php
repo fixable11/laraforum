@@ -37,7 +37,7 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $appends = ['isSubscribedTo', 'category'];
+    protected $appends = ['isSubscribedTo', 'category', 'path'];
 
     /**
      * The attributes that should be cast to native types.
@@ -215,6 +215,17 @@ class Thread extends Model
     public function getCategoryAttribute()
     {
         return $this->category();
+    }
+
+    /**
+     * Get path attribue
+     * Laravel accesor.
+     *
+     * @return boolean
+     */
+    public function getPathAttribute()
+    {
+        return $this->path();
     }
 
     /**
