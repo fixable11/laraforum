@@ -40,13 +40,18 @@
         methods: {
             fetch(page){
                 this.preloadShow();
-            
+                
                 if(!page){
-                    let query = location.search.match(/page=(\d+)/);
-
-                    page = query ? query[1] : 1;
+                    let query = window.common.getParameterByName('page');
+                    
+                    page = query ? query : 1;
                 }
+
                 let url = this.endpoint + '?page=' + page;
+
+                let params = window.common.getParameters();
+                url = window.common.addParams(params, url);
+                
                 axios.get(url)
                     .then(this.refresh);
 

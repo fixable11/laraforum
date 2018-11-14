@@ -11,7 +11,7 @@ class SearchController extends Controller
     {
         $search = request('q');
 
-        $threads = Thread::search($search)->paginate(5);
+        $threads = Thread::search($search)->paginate(2);
 
         if(request()->expectsJson()){
             return $threads;

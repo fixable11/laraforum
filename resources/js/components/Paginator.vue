@@ -117,7 +117,11 @@
 
         methods: {
             specificLink(page){
-                return this.endpoint.replace('/replies', '') + '?page=' + page;
+                let url = this.endpoint.replace('/replies', '') + '?page=' + page;
+                let params = window.common.getParameters();
+                url = window.common.addParams(params, url);
+
+                return url;
             },
             prevPage () {
                 this.selectPage((this.currentPage - 1));
@@ -134,7 +138,12 @@
                 this.$emit('changed', page);
             },
             updateUrl(){
-                history.pushState(null, null, '?page=' + this.currentPage);
+                let url = '?page=' + this.currentPage;
+                let params = window.common.getParameters();
+
+                url = window.common.addParams(params, url);
+
+                history.pushState(null, null, url);
             },
         },
     }

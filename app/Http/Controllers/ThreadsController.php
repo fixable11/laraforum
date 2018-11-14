@@ -158,7 +158,7 @@ class ThreadsController extends Controller
     private function getThreads(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
-
+        
         if($channel->exists){
             $threads->where('channel_id', $channel->id);
         }

@@ -8,9 +8,6 @@
 require('./bootstrap');
 require('@fortawesome/fontawesome-free/js/all.min.js');
 
-import Common from "./Common";
-
-
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,7 +31,7 @@ const app = new Vue({
 
 $(document).ready(function(){
 
-    let common = new Common();
+    
   
     //Category accordion
     $('.categoriesBlock .categoryBlock .card-header').on('click', function (e) {
