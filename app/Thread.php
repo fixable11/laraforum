@@ -18,6 +18,8 @@ class Thread extends Model
 {
     use RecordsActivity, FullTextSearch;
 
+    const THREADS_PER_PAGE = 5;
+
     /**
      * Don't auto-apply mass assignment protection.
      *
