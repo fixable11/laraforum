@@ -20,30 +20,31 @@
                                     Browse
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link" href="/categories">Categories</a>
-                                    @if (auth()->check())
-                                    <a class="nav-link" href="{{ route('threads.all') }}?by={{ auth()->user()->name }}">
-                                        Mythreads
-                                    </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
                                     <a class="nav-link" href="{{ route('threads.all') }}">
                                         All threads
                                     </a>
+                                    @if (auth()->check())
+                                        <a class="nav-link" href="{{ route('threads.all') }}?by={{ auth()->user()->name }}">
+                                            Mythreads
+                                        </a>
+                                    @endif
                                     <a class="nav-link" href="{{ route('threads.all') }}?popular=1">
                                         Popular threads
                                     </a>
                                     <a class="nav-link" href="{{ route('threads.all') }}?unanswered=1">
                                         Unanswered threads
-                                    </a>
-                                    @endif
-
+                                    </a>                               
                                 </div>
 
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('threads.create') }}">Create Thread</a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/categories">Categories</a>
+                            </li>
+                            {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Channels
@@ -55,7 +56,7 @@
                                     @endforeach
 
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </nav>

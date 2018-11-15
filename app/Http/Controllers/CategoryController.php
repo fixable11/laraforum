@@ -23,8 +23,7 @@ class CategoryController extends Controller
 
         return view('categories.show', [
             'category' => $category,
-            //'channels' => $category->with('channels')->paginate(5),
-            'trending' => [],
+            'trending' => Thread::getPopular(),
         ]);
     }
 
