@@ -26,7 +26,7 @@ class Invalidkeywords
     {
 
         foreach ($this->keywords as $keyword) {
-            if(stripos(request($body), $keyword) !== false ){
+            if(stripos(request('body'), $keyword) !== false ){
                 throw new ValidationException('Your reply contains spam');
             }
         }
