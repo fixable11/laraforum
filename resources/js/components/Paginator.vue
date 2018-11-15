@@ -35,6 +35,19 @@
             },
         },
 
+        created() {
+            window.onpopstate = (event) => {
+                //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+                if(event.state === null){
+                    this.$emit('changed', 1);
+                    return;
+                }
+                if(event.state.page != this.currentPage){
+                    this.$emit('changed', event.state.page);     
+                }
+            };
+        },
+
         computed: {
             shouldPaginate(){
                 //return !! this.prevUrl || !! this.nextUrl;
@@ -138,12 +151,17 @@
                 this.$emit('changed', page);
             },
             updateUrl(){
+                
                 let url = '?page=' + this.currentPage;
                 let params = window.common.getParameters();
 
                 url = window.common.addParams(params, url);
 
-                history.pushState(null, null, url);
+
+
+                var stateObj = { page: this.currentPage };
+                history.pushState(stateObj, null, url);
+               
             },
         },
     }

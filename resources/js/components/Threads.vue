@@ -51,13 +51,16 @@
 
                 let params = window.common.getParameters();
                 url = window.common.addParams(params, url);
-                
-                axios.get(url)
+                console.log('axios ' + url);
+
+                var config = {	headers: {'Content-Type': 'application/json','Cache-Control' : 'no-cache'}};
+                axios.get(url, config)
                     .then(this.refresh);
 
                 this.preloadHide();
             },
             refresh({data}){
+                console.log(data);
                 this.dataSet = data;
                 this.dataSet.endpoint = this.endpoint;
                 this.items = data.data;
