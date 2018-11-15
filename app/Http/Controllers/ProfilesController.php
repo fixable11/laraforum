@@ -8,6 +8,8 @@ use App\Activity;
 
 class ProfilesController extends Controller
 {
+    
+    const RECORDS_PER_PAGE = 10;
 
     /**
      * Show the user's profile.
@@ -17,9 +19,14 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
+        $page = request('page') ?? 1;
+
+        $activities = Activity::feed($user, self::RECORDS_PER_PAGE);
+
         return view('profiles.show', [
             'profileUser' => $user,
-            'activities' => Activity::feed($user),
+            'activities' => $activities[0],
+            'pagination' => $activities[1],
         ]);
     }
 }

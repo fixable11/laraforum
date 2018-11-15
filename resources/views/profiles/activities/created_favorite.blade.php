@@ -4,6 +4,6 @@
         {{-- <a href="{{ $activity->subject->thread->path() }}">{{ $activity->subject->thread->title }}</a> --}}
     @endslot
     @slot('body')
-        {{ $activity->subject->favorited->body }}
+        {!! $activity->subject->favorited->body !!}
     @endslot
 @endcomponent

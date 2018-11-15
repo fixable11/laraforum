@@ -31,15 +31,18 @@ class Activity extends Model
      * @param  int  $take
      * @return \Illuminate\Database\Eloquent\Collection;
      */
-    public static function feed($user, $take = 25)
+    public static function feed($user, $take = 10)
     {
-        return static::where('user_id', $user->id)
+        $records = static::where('user_id', $user->id)
             ->latest()
             ->with('subject')
-            ->take($take)
-            ->get()
-            ->groupBy(function ($activity) {
-                return $activity->created_at->format('Y-m-d');
-            });
+            ->paginate($take);
+
+        $result[] = $records->groupBy(function ($activity) {
+            return $activity->created_at->format('Y-m-d');
+        });
+        $result[] = $records;
+        
+        return $result;
     }
 }
