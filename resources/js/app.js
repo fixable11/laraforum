@@ -29,9 +29,8 @@ const app = new Vue({
 });
 
 
-$(document).ready(function(){
 
-    
+$(document).ready(function(){
   
     //Category accordion
     $('.categoriesBlock .categoryBlock .card-header').on('click', function (e) {

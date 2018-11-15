@@ -37,6 +37,7 @@
 
         created() {
             window.onpopstate = (event) => {
+                if(window.location.hash) return;
                 //console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
                 if(event.state === null){
                     this.$emit('changed', 1);
