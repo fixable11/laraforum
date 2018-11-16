@@ -3,7 +3,7 @@
         <div class="card-body">
             <article>
                 <div class="level">
-                    <div class="thread__left">
+                    <div class="thread__left mr-auto">
                         <h4>
                             <a :href="thread.path">
                                 {{ thread.title }}
@@ -15,7 +15,7 @@
                             </a>
                         </h5>
                     </div>
-                    <div class="thread__right">
+                    <div class="thread__right ml-auto">
                         <a :href="thread.path">
                             {{ thread.replies_count }} {{ thread.replies_count == 1 ? 'reply' : 'replies' }}
                         </a>

@@ -26,7 +26,7 @@
 }
 
 body{
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 }
 
 [v-cloak] {display: none;}
@@ -34,7 +34,14 @@ body{
 .level{
     display: flex;
     align-items: center; 
-    justify-content: space-between;
+
+    &__hr{    
+        margin-top: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 1px;
+    }
 }
 
 .cardOwn{
@@ -116,15 +123,8 @@ body{
     &__reply{
         margin-top: 0;
     }
-}
-
-.level{
-    &__hr{    
-        margin-top: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.1);
-        height: 1px;
+    .btn__bestReply{
+        margin-right: 0;
     }
 }
 
@@ -132,10 +132,7 @@ body{
     &__left{
     }
     &__right{
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: column;
-        align-items: flex-end;
+        
     }
     &__creator{
         
@@ -214,3 +211,13 @@ body{
 .profileRecords{
     margin-bottom: 20px;
 }
+
+.g-recaptcha{
+    margin-bottom: 20px;
+}
+
+trix-editor{
+    background-color: #fff;
+}
+
+@import 'media';

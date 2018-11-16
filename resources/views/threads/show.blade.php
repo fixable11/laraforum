@@ -4,7 +4,7 @@
 <thread-view :thread="{{ $thread }}" inline-template v-cloak>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-lg-8 order-12 order-lg-1">
                 <div class="row">
 
                     @include('threads.partials._thread')
@@ -15,7 +15,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 order-1 order-lg-12">
                 <div class="card">
                     <div class="card-header"></div>
                     <div class="card-body">

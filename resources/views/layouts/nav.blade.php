@@ -11,55 +11,37 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Browse
-                                </a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Browse
+                    </a>
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-                                    <a class="nav-link" href="{{ route('threads.all') }}">
-                                        All threads
-                                    </a>
-                                    @if (auth()->check())
-                                        <a class="nav-link" href="{{ route('threads.all') }}?by={{ auth()->user()->name }}">
-                                            Mythreads
-                                        </a>
-                                    @endif
-                                    <a class="nav-link" href="{{ route('threads.all') }}?popular=1">
-                                        Popular threads
-                                    </a>
-                                    <a class="nav-link" href="{{ route('threads.all') }}?unanswered=1">
-                                        Unanswered threads
-                                    </a>                               
-                                </div>
-
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('threads.create') }}">Create Thread</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/categories">Categories</a>
-                            </li>
-                            {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Channels
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @foreach ($channels as $channel)
-                                    <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{$channel->name
-                                        }}</a>
-                                    @endforeach
-
-                                </div>
-                            </li> --}}
-                        </ul>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                        <a class="dropdown-item" href="{{ route('threads.all') }}">
+                            All threads
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        @if (auth()->check())
+                            <a class="dropdown-item" href="{{ route('threads.all') }}?by={{ auth()->user()->name }}">
+                                Mythreads
+                            </a>
+                        @endif
+                        <a class="dropdown-item" href="{{ route('threads.all') }}?popular=1">
+                            Popular threads
+                        </a>
+                        <a class="dropdown-item" href="{{ route('threads.all') }}?unanswered=1">
+                            Unanswered threads
+                        </a>                               
                     </div>
-                </nav>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('threads.create') }}">Create Thread</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">Categories</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -67,11 +49,11 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                     <li class="nav-item">
                         @if (Route::has('register'))
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     </li>
                 @else

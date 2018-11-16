@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Channel;
+use App\Thread;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
     {
 
         return view('categories.index', [
-            'trending' => [],
+            'trending' => Thread::getPopular(),
         ]);
     }
 

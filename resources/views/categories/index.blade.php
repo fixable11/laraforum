@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-lg-8 order-12 order-lg-1">
             
             <div class="categoriesBlock active">
                 @foreach ($categories as $category)
@@ -17,7 +17,7 @@
             
         </div>
 
-        <div class="col-md-4">
+        <div class="col-lg-4 order-1 order-lg-12">
 
             <div class="card">
                 <div class="card-header">

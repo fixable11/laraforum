@@ -25,12 +25,12 @@
 <style>
 </style>
 
-<body style="padding-bottom: 100px;">
+<body>
     <div id="app">
             
         @include('layouts.nav')
 
-        <main class="py-4">
+        <main class="main-content">
             @yield('content')
         </main>
 

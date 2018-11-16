@@ -11137,7 +11137,7 @@ trix-editor .attachment__metadata .attachment__size {
 }
 
 body {
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
 [v-cloak] {
@@ -11151,9 +11151,14 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+}
+
+.level__hr {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  height: 1px;
 }
 
 .cardOwn {
@@ -11259,28 +11264,8 @@ body {
   margin-top: 0;
 }
 
-.level__hr {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  height: 1px;
-}
-
-.thread__right {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+.card .btn__bestReply {
+  margin-right: 0;
 }
 
 .thread__edit {
@@ -11365,5 +11350,47 @@ body {
 
 .profileRecords {
   margin-bottom: 20px;
+}
+
+.g-recaptcha {
+  margin-bottom: 20px;
+}
+
+trix-editor {
+  background-color: #fff;
+}
+
+@media (max-width: 767.98px) {
+  trix-toolbar .trix-button-row {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+
+  .level {
+    display: block;
+  }
+
+  .level .thread__right {
+    margin-top: 10px;
+  }
+
+  .level h4,
+  .level h5 {
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #rc-imageselect,
+  .g-recaptcha {
+    -webkit-transform: scale(0.77);
+            transform: scale(0.77);
+    -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+  }
+
+  .pagination .page-link {
+    padding: 0.4rem 0.65rem;
+  }
 }
 

@@ -1,0 +1,39 @@
+// ≥1200px
+@include media-breakpoint-down(lg) {
+	
+}
+
+// ≥992px
+@include media-breakpoint-down(md) {
+
+}
+
+// ≥768px
+@include media-breakpoint-down(sm) {
+    trix-toolbar .trix-button-row{
+        flex-wrap: wrap;
+    }
+    .level{
+        display: block;
+        & .thread__right{
+            margin-top: 10px;
+        }
+        h4,h5{
+            line-height: 1.4;
+        }
+    }
+}
+
+// ≥576px
+@include media-breakpoint-down(xs) {
+    #rc-imageselect, .g-recaptcha {
+        transform:scale(0.77);
+        transform-origin:0 0;
+    }
+    .pagination{
+        //flex-wrap: wrap;
+        & .page-link{
+            padding: 0.4rem 0.65rem;
+        }
+    }
+}
