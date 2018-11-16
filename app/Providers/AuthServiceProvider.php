@@ -26,10 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        
+        Gate::define('create-reply', 'App\Policies\ReplyPolicy@create');
 
         Gate::before(function ($user) {
 
-            //if ($user->name == 'Nikita') return true;
+            if ($user->is_admin) return true;
 
         });
     }

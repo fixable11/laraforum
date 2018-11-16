@@ -16,8 +16,8 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
-        return Gate::allows('create', new Reply);
+        //return true;
+        return Gate::allows('create-reply', new Reply);
     }
 
     protected function failedAuthorization()

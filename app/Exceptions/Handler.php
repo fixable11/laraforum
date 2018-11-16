@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -58,8 +59,11 @@ class Handler extends ExceptionHandler
         if($exception instanceof ThreadIsLocked) {
             return response('Thread is locked', 422);
         }
-
-
+        
+        if($exception instanceof AuthorizationException){
+            return response('You are not allowed to do it ', 403);
+        }
+        
         return parent::render($request, $exception);
     }
 }
