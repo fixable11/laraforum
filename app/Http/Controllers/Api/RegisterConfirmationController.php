@@ -21,11 +21,11 @@ class RegisterConfirmationController extends Controller
             ->firstOrFail()
             ->confirm();
         } catch(\Exception $e) {
-            return redirect('threads')
+            return redirect()->route('threads.all')
                 ->with('flash', 'Unknown token');
         }
 
-        return redirect('threads')
+        return redirect()->route('threads.all')
             ->with('flash', 'Your acccount is  now confirmed! You may post to the forum');
     }
 }

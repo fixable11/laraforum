@@ -15,6 +15,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
+
+Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
+
 //Profile
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
@@ -53,11 +57,6 @@ Route::prefix('/{category}/{channel}/{thread}')->group(function () {
 });
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
 Route::put('/replies/{reply}', 'RepliesController@update')->name('replies.update');
-
-
-Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
-
-Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
 
 Route::get('/categories', 'CategoryController@index')->name('category.index');
 Route::get('/categories/{category}', 'CategoryController@show')->name('category.show');
