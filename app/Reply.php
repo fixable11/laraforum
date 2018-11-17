@@ -35,7 +35,7 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $with = ['owner', 'favorites'];
+    protected $with = ['owner', 'favorites', 'thread'];
 
     /**
      * Boot the reply instance.

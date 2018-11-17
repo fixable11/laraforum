@@ -32,14 +32,14 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $with = ['creator', 'channel'];
+    protected $with = ['creator'];
 
     /**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
-    protected $appends = ['isSubscribedTo', 'category', 'path'];
+    protected $appends = ['isSubscribedTo', 'path'];
 
     /**
      * The attributes that should be cast to native types.
@@ -80,7 +80,7 @@ class Thread extends Model
      */
     public function path()
     {   
-        return "/{$this->category()->slug}/{$this->channel->slug}/{$this->slug}";
+        return "/{$this->channel->category->slug}/{$this->channel->slug}/{$this->slug}";
     }
 
     /**
@@ -130,19 +130,6 @@ class Thread extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class);
-    }
-
-    /**
-     * A thread is belongs to category through channel.
-     *
-     * @return \App\Channel
-     */
-    public function category()
-    {
-        $channel = $this->channel;
-        return Category::whereHas('channels', function ($query) use ($channel) {
-            $query->where('id', $channel->id);
-        })->first();
     }
 
     /**
@@ -206,17 +193,6 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists(); 
-    }
-
-    /**
-     * Get category_id attribute depending on thread's channel.
-     * Laravel accesor.
-     *
-     * @return boolean
-     */
-    public function getCategoryAttribute()
-    {
-        return $this->category();
     }
 
     /**

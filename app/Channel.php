@@ -8,6 +8,13 @@ class Channel extends Model
 {
 
     /**
+     * The relations to greedy load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['category'];
+
+    /**
      * Get the route key name for Laravel.
      * It allows fetch data via dependency injection
      * for column other than 'id'
